@@ -1,5 +1,14 @@
 package videopoker;
 
-public class SaveLoad {
-	// SaveLoad
+public class SaveLoad 
+{
+	public void Save()
+	{
+
+	}
+
+	public void Load()
+	{
+		
+	}
 }
