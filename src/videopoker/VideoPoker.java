@@ -26,7 +26,7 @@ public class VideoPoker {
 
 
 	public String handTillSträng(ArrayList<Card> hand){
-		String handTillSträng = "":
+		String handTillSträng = "";
 	  for(Card kort = spelare.getHand()){
 	    handTillSträng += kort.toString() + ", ";
 	  }
@@ -64,7 +64,7 @@ public class VideoPoker {
 	//SCORE
 		String s = "";
 		int p = 0;
-		
+
 		int[] array = {1, 3, 2, 2, 1};
 		Arrays.sort(array);
 		for(int i = 0; i < array.length; i++) {
@@ -76,20 +76,20 @@ public class VideoPoker {
 			} else {
 				s += "Null";
 			}
-		
+
 		}
 		if((array[4]) == (array[0]+4)){
 			s += "Stege";
 		}
 		System.out.println(s);
-		
-		
+
+
 		if(s.contains("Stege") && !s.contains("Par")) {
 		System.out.println("Stege!");
 		} else if (s.contains("ParParPar")) {
 		System.out.println("Fyrtal!");
 		} else if(s.contains("ParPar") && s.startsWith("Par") && ((s.endsWith("Par")||(s.endsWith("ParStege"))))){
-		System.out.println("Kåk!");	
+		System.out.println("Kåk!");
 		} else if(s.contains("ParPar") && ((s.contains("NullNull"))||((s.startsWith("Null") && ((s.endsWith("Null")||s.endsWith("NullStege"))))))){
 		System.out.println("Triss!");
 		} else if ((s.matches("ParNullParNull"))||(s.matches("ParNullNullPar"))||(s.matches("NullParNullPar"))) {
