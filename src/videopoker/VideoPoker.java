@@ -1,5 +1,8 @@
 package videopoker;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class VideoPoker {
 	Player spelare;
 	Deck kortlek;
