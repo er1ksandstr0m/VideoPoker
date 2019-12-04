@@ -19,6 +19,10 @@ public class Card implements Comparable{
 		return suit;
 	}
 
+	public String getSymbol() {
+	return suit.symbol;
+}
+
 	@Override
 	public int compareTo(Object obj){
 		return this.getValue() - ((Card)obj).getValue();

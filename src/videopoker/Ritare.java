@@ -7,12 +7,24 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 public class Ritare extends JFrame{
+
+	Player spelare;
+	Deck kortlek;
 
 	Verktyg verktyg = new Verktyg();
 	private JPanel panel = new JPanel();
 
 	public Ritare() {
+
+
 
 		setLayout(new BorderLayout());
 
