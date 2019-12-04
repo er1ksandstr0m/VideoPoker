@@ -1,6 +1,6 @@
 package videopoker;
-import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,9 +11,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Verktyg extends JPanel implements ActionListener {
+
+	private Player spelare;
+	private Deck kortlek;
 
 	private BufferedImage baksida;
 	private ImageIcon baksidaIkon;
@@ -24,6 +28,7 @@ public class Verktyg extends JPanel implements ActionListener {
 	private ImageIcon standButtonIcon;
 	private BufferedImage restartButtonImage;
 	private ImageIcon restartButtonIcon;
+	private BufferedImage nyImage;
 
 	private JButton b1 = new JButton();
 	private JButton b2 = new JButton();
@@ -39,14 +44,17 @@ public class Verktyg extends JPanel implements ActionListener {
 	private JButton standButton = new JButton();
 	private JButton restartButton = new JButton();
 
+	private JLabel poängtavleEtikett = new JLabel("score:");
+	private JLabel poängtavla = new JLabel("0");
 
 	private ImageIcon[] hand = new ImageIcon[5];
-	private String[] lästHand = { "H5", "KA", "KK", "S2", "K3" };
-
 
 	public Verktyg() {
 
-		setLayout(new GridLayout(2,5));
+		setLayout(new GridLayout(2, 5));
+
+		spelare = new Player();
+		nyHand();
 
 		add(kortPanel);
 		kortPanel.setBackground(Color.BLUE);
@@ -67,7 +75,6 @@ public class Verktyg extends JPanel implements ActionListener {
 			System.out.println("Filen hittades inte");
 		}
 
-
 		dealButtonIcon = new ImageIcon(dealButtonImage);
 		dealButton.setIcon(dealButtonIcon);
 		standButtonIcon = new ImageIcon(standButtonImage);
@@ -81,7 +88,17 @@ public class Verktyg extends JPanel implements ActionListener {
 		knappanel.add(standButton);
 		knappanel.add(restartButton);
 
+		dealButton.addActionListener(this);
+		standButton.addActionListener(this);
+		restartButton.addActionListener(this);
+		restartButton.setEnabled(false);
 
+		knappanel.add(poängtavleEtikett);
+		knappanel.add(poängtavla);
+		poängtavleEtikett.setFont(new Font("SansSerif", 0, 40));
+		poängtavla.setFont(new Font("SansSerif", 0, 40));
+		poängtavla.setForeground(Color.YELLOW);
+		poängtavleEtikett.setForeground(Color.YELLOW);
 
 		try {
 			baksida = ImageIO.read(new File("/Users/pontuseriksson/Documents/Kort/Baksida.png"));
@@ -91,27 +108,11 @@ public class Verktyg extends JPanel implements ActionListener {
 
 		baksidaIkon = new ImageIcon(baksida);
 
-		for (int i = 0; i < lästHand.length; i++) {
-			try {
-				image = ImageIO.read(new File("/Users/pontuseriksson/Documents/Kort/" + lästHand[i] + ".png"));
-			} catch (IOException ex) {
-				System.out.println("Filen hittades inte");
-			}
-
-			hand[i] = new ImageIcon(image);
-		}
-
-		for (int i = 0; i < buttons.length; i++) {
-			buttons[i].setIcon(hand[i]);
-			kortPanel.add(buttons[i]);
-		}
-
 		for (JButton button : buttons) {
 			button.addActionListener(this);
 		}
 
 	}
-
 
 	public void actionPerformed(ActionEvent e) {
 
@@ -128,7 +129,69 @@ public class Verktyg extends JPanel implements ActionListener {
 			}
 
 		}
+		// Kollar vad som händer när man trycker in deal-knappen
+		if (e.getSource() == dealButton) {
+			for (int i = 0; i < buttons.length; i++) {
+				if (buttons[i].getIcon() == baksidaIkon) {
+					Card nyttKort = kortlek.draw();
 
+					try {
+						nyImage = ImageIO.read(new File("/Users/pontuseriksson/Documents/Kort/" + nyttKort.getSymbol()
+								+ nyttKort.getValue() + ".png"));
+					} catch (IOException ex) {
+						System.out.println("Filen hittades inte");
+					}
+					ImageIcon nyIcon = new ImageIcon(nyImage);
+					buttons[i].setIcon(nyIcon);
+					dealButton.setEnabled(false);
+					restartButton.setEnabled(true);
+
+				}
+
+			}
+		}
+
+		if (e.getSource() == restartButton) {
+			nyHand();
+			dealButton.setEnabled(true);
+			restartButton.setEnabled(false);
+
+		}
+
+	}
+
+	// Skapar ny deck och ny hand
+	public void nyHand() {
+
+		kortlek = new Deck();
+		kortlek.shuffle();
+
+		if (spelare.getHand().size() > 0) {
+			spelare.reset();
+		}
+
+		for (int i = 0; i < 5; i++) {
+			spelare.addCardToHand(kortlek.draw());
+
+		}
+
+		// hämtar bilderna för spelarens hand
+		for (int i = 0; i < spelare.getHand().size(); i++) {
+			try {
+				image = ImageIO.read(new File("/Users/pontuseriksson/Documents/Kort/"
+						+ spelare.getHand().get(i).getSymbol() + spelare.getHand().get(i).getValue() + ".png"));
+
+			} catch (IOException ex) {
+				System.out.println("Filen hittades inte");
+			}
+
+			hand[i] = new ImageIcon(image);
+		}
+
+		for (int i = 0; i < buttons.length; i++) {
+			buttons[i].setIcon(hand[i]);
+			kortPanel.add(buttons[i]);
+		}
 	}
 
 }
