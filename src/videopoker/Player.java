@@ -52,7 +52,7 @@ public class Player {
 	 * Returnerar plånboken.
 	 * @return wallet
 	 */
-	public int checkWallet() {
+	public int getWallet() {
 		return wallet;
 	}
 
