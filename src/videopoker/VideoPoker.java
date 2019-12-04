@@ -2,6 +2,7 @@ package videopoker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class VideoPoker {
@@ -57,46 +58,64 @@ public class VideoPoker {
 
 	public void score() {
 		// SCORE
-
+//		Instansieringen av Player bör kanske inte ligga här så småningom
 		String s = "";
-		int[] array = {9, 1, 3, 9, 2};
-		Arrays.sort(array);
-		for(int i = 0; i < array.length; i++) {
-			System.out.println(array[i]);
-		}
+		Player p = new Player();
+		
+		//sorterar vår lista
+		Collections.sort(p.getHand());
+		
+		//jämför korten mot varandra, två och två, och skriver sträng s som vi jämför med i själva score
 		for(int i = 0; i < 4; i++) {
-			if(array[i] == array[i+1]) {
+			if(p.getHand().get(i).getValue() == p.getHand().get(i + 1).getValue()) {
 				s += "Par";
 			} else {
 				s += "Null";
 			}
 		}
-		if((array[4]) == (array[0]+4)){
+		//kollar om man fått färg och lägger till det i sträng s
+		isFärg();
+		
+		//kollar om sista kortet i listan är 4 större än det första, lägger till det i strängen
+		if((p.getHand().get(4).getValue()) == (p.getHand().get(0).getValue() + 4)){
 			s += "Stege";
 		}
-		System.out.println(s);
-
-
+		
+		//här ska vi lägga in bet och multiplicera med rätt faktor
 		if(s.contains("Stege") && !s.contains("Par")) {
+			if(s.contains("Färg")) {
+				System.out.println("STRAIGHT FLUSH!");
+				return;
+			} else {
 			System.out.println("Stege!");
 			return;
+			}
+			
 		} else if (s.contains("ParParPar")) {
 			System.out.println("Fyrtal!");
 			return;
-		} else if(s.contains("ParPar") && s.startsWith("Par") && ((s.endsWith("Par")||(s.endsWith("ParStege"))))){
+			
+		} else if(s.contains("ParPar") && (s.startsWith("Par") && ((s.endsWith("Par")||(s.endsWith("ParStege")))))) {
 			System.out.println("Kåk!");
 			return;
-		} else if(s.contains("ParPar") && ((s.contains("NullNull"))||((s.startsWith("Null") && ((s.endsWith("Null")||s.endsWith("NullStege"))))))){
+			
+		} else if(s.contains("ParPar")){
 			System.out.println("Triss!");
 			return;
+			
 		} else if ((s.matches("ParNullParNull"))||(s.matches("ParNullNullPar"))||(s.matches("NullParNullPar"))) {
 			System.out.println("Två Par!");
+			return;
 		} else if (s.contains("Par")) {
 			System.out.println("Ett par!");
 			return;
-//		} else if färg {
 		} else {
+			if(s.contains("Färg")) {
+				System.out.println("Färg!!!");
+				return;
+			} else {
 			System.out.println("Sorry - du fick nada.");
+		}
 		}
 	}
 
@@ -105,7 +124,7 @@ public class VideoPoker {
 		Suit färg = spelare.getHand().get(0).getSuit();
 		for(int i = 1; i <spelare.getHand().size(); i++){
 			if (spelare.getHand().get(i).getSuit() != färg){
-				s += "Null";
+//				s += "Null";
 				break;
 			}
 			s += "Färg";
