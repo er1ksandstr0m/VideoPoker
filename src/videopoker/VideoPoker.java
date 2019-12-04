@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class VideoPoker {
 	Player spelare;
 	Deck kortlek;
+	String s;
 
 	public VideoPoker() {
 
@@ -55,7 +56,7 @@ public class VideoPoker {
 
 	public void score() {
 		// SCORE
-		String s = "";
+		s = "";
 		int p = 0;
 
 		int[] array = { 1, 3, 2, 2, 1 };
@@ -87,6 +88,18 @@ public class VideoPoker {
 			System.out.println("Triss!");
 		} else if ((s.matches("ParNullParNull")) || (s.matches("ParNullNullPar")) || (s.matches("NullParNullPar"))) {
 			System.out.println("Två Par!");
+		}
+	}
+
+	//metod för att kolla om handen är i färg
+	public void isStege(){
+		Suit färg = spelare.getHand().get(0).getSuit();
+		for(int i = 1; i <spelare.getHand().size(); i++){
+			if (spelare.getHand().get(0).getSuit() != färg){
+				s += "Null";
+				break;
+			}
+			s += "Färg";
 		}
 	}
 
