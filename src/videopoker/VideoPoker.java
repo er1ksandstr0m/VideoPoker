@@ -56,38 +56,53 @@ public class VideoPoker {
 
 	public void score() {
 		// SCORE
+<<<<<<< HEAD
 		s = "";
 		int p = 0;
 
 		int[] array = { 1, 3, 2, 2, 1 };
+=======
+		String s = "";
+
+		int[] array = {9, 1, 3, 9, 2};
+>>>>>>> 1e14102ca42ced16609954e06dd01ec9318f32f0
 		Arrays.sort(array);
-		for (int i = 0; i < array.length; i++) {
+		for(int i = 0; i < array.length; i++) {
 			System.out.println(array[i]);
 		}
-		for (int i = 0; i < 4; i++) {
-			if (array[i] == array[i + 1]) {
+		for(int i = 0; i < 4; i++) {
+			if(array[i] == array[i+1]) {
 				s += "Par";
 			} else {
 				s += "Null";
 			}
-
 		}
-		if ((array[4]) == (array[0] + 4)) {
+		if((array[4]) == (array[0]+4)){
 			s += "Stege";
 		}
 		System.out.println(s);
 
-		if (s.contains("Stege") && !s.contains("Par")) {
+
+		if(s.contains("Stege") && !s.contains("Par")) {
 			System.out.println("Stege!");
+			return;
 		} else if (s.contains("ParParPar")) {
 			System.out.println("Fyrtal!");
-		} else if (s.contains("ParPar") && s.startsWith("Par") && ((s.endsWith("Par") || (s.endsWith("ParStege"))))) {
+			return;
+		} else if(s.contains("ParPar") && s.startsWith("Par") && ((s.endsWith("Par")||(s.endsWith("ParStege"))))){
 			System.out.println("Kåk!");
-		} else if (s.contains("ParPar") && ((s.contains("NullNull"))
-				|| ((s.startsWith("Null") && ((s.endsWith("Null") || s.endsWith("NullStege"))))))) {
+			return;
+		} else if(s.contains("ParPar") && ((s.contains("NullNull"))||((s.startsWith("Null") && ((s.endsWith("Null")||s.endsWith("NullStege"))))))){
 			System.out.println("Triss!");
-		} else if ((s.matches("ParNullParNull")) || (s.matches("ParNullNullPar")) || (s.matches("NullParNullPar"))) {
+			return;
+		} else if ((s.matches("ParNullParNull"))||(s.matches("ParNullNullPar"))||(s.matches("NullParNullPar"))) {
 			System.out.println("Två Par!");
+		} else if (s.contains("Par")) {
+			System.out.println("Ett par!");
+			return;
+//		} else if färg {
+		} else {
+			System.out.println("Sorry - du fick nada.");
 		}
 	}
 
