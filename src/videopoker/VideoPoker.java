@@ -48,6 +48,7 @@ public class VideoPoker {
 
 		System.out.println("Du fick korten " + handTillSträng(spelare.getHand()) +
 		" och fick " + /*score() +*/ " poäng");
+		score();
 
 
 	  sc.close();
