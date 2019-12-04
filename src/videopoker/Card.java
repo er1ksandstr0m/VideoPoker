@@ -27,4 +27,24 @@ public class Card implements Comparable{
 	public int compareTo(Object obj){
 		return this.getValue() - ((Card)obj).getValue();
 	}
+	
+	@Override
+	public String toString() {
+		if (value == 1) {
+			return "" + "A" + " " + suit.symbol;
+		}
+		else if (value == 11) {
+			return "" + "J" + " " + suit.symbol;
+		}
+		else if (value == 12) {
+			return "" + "Q" + " " + suit.symbol;
+		}
+		else if (value == 13) {
+			return "" + "K" + " " + suit.symbol;
+		}
+		else 
+		{ 
+		return "" + value + " " + suit.symbol;
+		}
+	}
 }
