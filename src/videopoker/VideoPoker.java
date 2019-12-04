@@ -107,7 +107,7 @@ public class VideoPoker {
 	}
 
 	//metod för att kolla om handen är i färg
-	public void isStege(){
+	public void isFärg(){
 		Suit färg = spelare.getHand().get(0).getSuit();
 		for(int i = 1; i <spelare.getHand().size(); i++){
 			if (spelare.getHand().get(0).getSuit() != färg){
