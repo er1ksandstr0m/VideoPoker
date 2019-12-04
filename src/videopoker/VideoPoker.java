@@ -110,7 +110,7 @@ public class VideoPoker {
 	public void isFärg(){
 		Suit färg = spelare.getHand().get(0).getSuit();
 		for(int i = 1; i <spelare.getHand().size(); i++){
-			if (spelare.getHand().get(0).getSuit() != färg){
+			if (spelare.getHand().get(i).getSuit() != färg){
 				s += "Null";
 				break;
 			}
