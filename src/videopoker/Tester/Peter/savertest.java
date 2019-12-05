@@ -11,38 +11,39 @@ import com.google.gson.Gson;
 public class savertest {
 
 	public static Fuckoff foff = new Fuckoff();
-	private static String path = "SaveFile.json";
+	private static String path = "VideoPoker.git/SaveFile.json";
 
 	public static void main(String[] args) throws IOException {
 
-		Fuckoff newfoff = new Fuckoff();
-		Load(newfoff);
-		System.out.println(newfoff.name);
-        System.out.println(newfoff.age);
-		System.out.println(newfoff.two);
-		System.out.println(newfoff.two.idk);
-        System.out.println(newfoff.two.hasGivenUpOnLife);
-		
+		Save(foff);
+
+		// Fuckoff newfoff = Load();
+		// System.out.println(newfoff.name);
+        // System.out.println(newfoff.age);
+		// System.out.println(newfoff.two.idk);
+        // System.out.println(newfoff.two.hasGivenUpOnLife);
 	}
 
-	public static void Save(Fuckoff test) throws IOException {
+	public static void Save(Fuckoff test) throws IOException 
+	{
 		Gson gson = new Gson();
 		String json = gson.toJson(test);
 
 		try {
 			FileWriter writer = new FileWriter(path);
 			writer.write(json);
+
+			//kanske ta bort Close
 			writer.close();
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			System.out.println(e);
 		}
-		System.out.println("Success...");
 	}
 
-	public static void Load(Fuckoff blabla) throws FileNotFoundException
+	public static Fuckoff Load() throws FileNotFoundException
 	{
-		FileReader reader = new FileReader(path);
 		Gson gson = new Gson();
-		blabla = gson.fromJson(reader.toString(), Fuckoff.class);
+		return gson.fromJson(new FileReader(path), Fuckoff.class);
 	}
 }
