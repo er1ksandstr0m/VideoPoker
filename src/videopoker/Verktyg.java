@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -49,7 +50,7 @@ public class Verktyg extends JPanel implements ActionListener {
 
 	private ImageIcon[] hand = new ImageIcon[5];
 
-	public Verktyg() {
+	public Verktyg() throws URISyntaxException {
 
 		setLayout(new GridLayout(2, 5));
 
@@ -60,17 +61,17 @@ public class Verktyg extends JPanel implements ActionListener {
 		kortPanel.setBackground(Color.BLUE);
 
 		try {
-			dealButtonImage = ImageIO.read(new File("/Users/pontuseriksson/Documents/Kort/Deal.png"));
+			dealButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Stand.png").toURI()));
 		} catch (IOException ex) {
 			System.out.println("Filen hittades inte");
 		}
 		try {
-			standButtonImage = ImageIO.read(new File("/Users/pontuseriksson/Documents/Kort/Stand.png"));
+			standButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Stand.png").toURI()));
 		} catch (IOException ex) {
 			System.out.println("Filen hittades inte");
 		}
 		try {
-			restartButtonImage = ImageIO.read(new File("/Users/pontuseriksson/Documents/Kort/Restart.png"));
+			restartButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Stand.png").toURI()));
 		} catch (IOException ex) {
 			System.out.println("Filen hittades inte");
 		}
@@ -101,7 +102,7 @@ public class Verktyg extends JPanel implements ActionListener {
 		poängtavleEtikett.setForeground(Color.YELLOW);
 
 		try {
-			baksida = ImageIO.read(new File("/Users/pontuseriksson/Documents/Kort/Baksida.png"));
+			baksida = ImageIO.read(new File("Kort/Baksida.png"));
 		} catch (IOException ex) {
 			System.out.println("Filen hittades inte");
 		}
@@ -136,7 +137,7 @@ public class Verktyg extends JPanel implements ActionListener {
 					Card nyttKort = kortlek.draw();
 
 					try {
-						nyImage = ImageIO.read(new File("/Users/pontuseriksson/Documents/Kort/" + nyttKort.getSymbol()
+						nyImage = ImageIO.read(new File("Kort/" + nyttKort.getSymbol()
 								+ nyttKort.getValue() + ".png"));
 					} catch (IOException ex) {
 						System.out.println("Filen hittades inte");
@@ -178,7 +179,7 @@ public class Verktyg extends JPanel implements ActionListener {
 		// hämtar bilderna för spelarens hand
 		for (int i = 0; i < spelare.getHand().size(); i++) {
 			try {
-				image = ImageIO.read(new File("/Users/pontuseriksson/Documents/Kort/"
+				image = ImageIO.read(new File("Kort/"
 						+ spelare.getHand().get(i).getSymbol() + spelare.getHand().get(i).getValue() + ".png"));
 
 			} catch (IOException ex) {

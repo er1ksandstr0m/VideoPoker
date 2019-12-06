@@ -6,124 +6,117 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class VideoPoker {
-	Player spelare;
+	ArrayList<Player> spelare;
 	Deck kortlek;
-	String s;
 
-	public VideoPoker() {
+	public VideoPoker(int antalSpelare) {
 
-		spelare = new Player();
+		spelare = new ArrayList<Player>();
 		kortlek = new Deck();
 
 		kortlek.shuffle();
-
-		for (int i = 0; i < 5; i++) {
-			spelare.addCardToHand(kortlek.draw());
+		for (int i = 0; i < antalSpelare; i++) {
+			spelare.add(new Player());
 		}
-
-		bytKort();
-
+		for (int i = 0; i < spelare.size(); i++) {
+			for (int j = 0; j < 5; j++) {
+				spelare.get(i).addCardToHand(kortlek.draw());
+			}
+		}
+		
 	}
 
 	public String handTillSträng(ArrayList<Card> hand) {
 		String handTillSträng = "";
-		for (Card kort : spelare.getHand()) {
+		for (Card kort : hand) {
 			handTillSträng += kort.toString() + ", ";
 		}
 		return handTillSträng;
 
 	}
 
-	public void bytKort(){
+	public void bytKort(Player p, Scanner sc) {
 
+		System.out.println(
+				"Du har korten " + handTillSträng(p.getHand()) + " Vilka kort vill du byta (skriv kortets nummer)");
 
-	  Scanner sc = new Scanner(System.in);
+		while (sc.hasNextInt()) {
+			p.changeCard(p.getHand().get(sc.nextInt() - 1), kortlek.draw());
+		}
 
-	  System.out.println("Du har korten " + handTillSträng(spelare.getHand()) +
-	  " Vilka kort vill du byta (skriv kortets nummer)");
+	}
 
+	@SuppressWarnings("unchecked")
+	public String score(Player p) {
 
-	  while(sc.hasNextInt()){
-	    spelare.changeCard(spelare.getHand().get(sc.nextInt()-1), kortlek.draw());
-	  }
-
-
-		System.out.println("Du fick korten " + handTillSträng(spelare.getHand()) +
-		" och fick " + /*score() +*/ " poäng");
-		score();
-
-
-	  sc.close();
-	  }
-
-	public void score() {
-		// SCORE
-//		Instansieringen av Player bör kanske inte ligga här så småningom
-		String s = "";
-		Player p = new Player();
-		
-		//sorterar vår lista
+		// sorterar vår lista
 		Collections.sort(p.getHand());
-		
-		//jämför korten mot varandra, två och två, och skriver sträng s som vi jämför med i själva score
-		for(int i = 0; i < 4; i++) {
-			if(p.getHand().get(i).getValue() == p.getHand().get(i + 1).getValue()) {
-				s += "Par";
+
+		// jämför korten mot varandra, två och två, och skriver sträng s som vi jämför
+		// med i själva score
+		for (int i = 0; i < 4; i++) {
+			if (p.getHand().get(i).getValue() == p.getHand().get(i + 1).getValue()) {
+				p.setScore("Par");
 			} else {
-				s += "Null";
+				p.setScore("Null");
 			}
 		}
-		//kollar om man fått färg och lägger till det i sträng s
-		isFärg();
-		
-		//kollar om sista kortet i listan är 4 större än det första, lägger till det i strängen
-		if((p.getHand().get(4).getValue()) == (p.getHand().get(0).getValue() + 4)){
+		// kollar om man fått färg och lägger till det i sträng s
+		isFärg(p.getHand());
+
+		// kollar om sista kortet i listan är 4 större än det första, lägger till det i
+		// strängen
+		if ((p.getHand().get(4).getValue()) == (p.getHand().get(0).getValue() + 4)) {
 			s += "Stege";
 		}
 		
-		//här ska vi lägga in bet och multiplicera med rätt faktor
-		if(s.contains("Stege") && !s.contains("Par")) {
-			if(s.contains("Färg")) {
+		// här ska vi lägga in bet och multiplicera med rätt faktor
+		if (s.contains("Stege") && !s.contains("Par")) {
+			if (s.contains("Färg")) {
 				System.out.println("STRAIGHT FLUSH!");
 				return;
 			} else {
-			System.out.println("Stege!");
-			return;
+				System.out.println("Stege!");
+				return;
 			}
-			
+
 		} else if (s.contains("ParParPar")) {
 			System.out.println("Fyrtal!");
 			return;
-			
-		} else if(s.contains("ParPar") && (s.startsWith("Par") && ((s.endsWith("Par")||(s.endsWith("ParStege")))))) {
+
+		} else if (s.contains("ParPar") && (s.startsWith("Par") && ((s.endsWith("Par") || (s.endsWith("ParStege")))))) {
 			System.out.println("Kåk!");
 			return;
-			
-		} else if(s.contains("ParPar")){
+
+		} else if (s.contains("ParPar")) {
 			System.out.println("Triss!");
 			return;
-			
-		} else if ((s.matches("ParNullParNull"))||(s.matches("ParNullNullPar"))||(s.matches("NullParNullPar"))) {
+
+		} else if ((s.matches("ParNullParNull")) || (s.matches("ParNullNullPar")) || (s.matches("NullParNullPar"))) {
 			System.out.println("Två Par!");
 			return;
 		} else if (s.contains("Par")) {
 			System.out.println("Ett par!");
 			return;
 		} else {
-			if(s.contains("Färg")) {
+			if (s.contains("Färg")) {
 				System.out.println("Färg!!!");
 				return;
 			} else {
-			System.out.println("Sorry - du fick nada.");
+				System.out.println("Sorry - du fick nada.");
+			}
 		}
-		}
+	}
+	
+	public void compareScores() {
+		
 	}
 
 	//metod för att kolla om handen är i färg
-	public void isFärg(){
-		Suit färg = spelare.getHand().get(0).getSuit();
-		for(int i = 1; i <spelare.getHand().size(); i++){
-			if (spelare.getHand().get(i).getSuit() != färg){
+	private void isFärg(ArrayList<Card> hand){
+		Suit färg = hand.get(0).getSuit();
+		for(int i = 1; i <hand.size(); i++){
+			if (hand.get(i).getSuit() != färg){
 //				s += "Null";
 				break;
 			}
@@ -131,7 +124,4 @@ public class VideoPoker {
 		}
 	}
 
-	public static void main(String[] args) {
-		VideoPoker poker = new VideoPoker();
-	}
 }

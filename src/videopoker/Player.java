@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Player {
 	private ArrayList<Card> hand;
 	private int wallet = 0;
+	private String score = "";
 
 	/**
 	 * Skapar spelare med tom hand och plånbok.
@@ -85,6 +86,14 @@ public class Player {
 	 */
 	public ArrayList<Card> getHand() {
 		return hand;
+	}
+	
+	public String getScore() {
+		return score;
+	}
+
+	public void setScore(String score) {
+		this.score = score;
 	}
 
 	/**

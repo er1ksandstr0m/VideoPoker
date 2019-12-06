@@ -1,6 +1,7 @@
 package videopoker;
 
 
+@SuppressWarnings("rawtypes")
 public class Card implements Comparable{
 
 	private int value;
