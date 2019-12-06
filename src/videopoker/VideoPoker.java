@@ -20,7 +20,7 @@ public class VideoPoker {
 			spelare.addCardToHand(kortlek.draw());
 		}
 
-		bytKort();
+//		bytKort();
 
 	}
 
@@ -33,41 +33,40 @@ public class VideoPoker {
 
 	}
 
-	public void bytKort(){
+//	public void bytKort(){
+//
+//
+//	  Scanner sc = new Scanner(System.in);
+//
+//	  System.out.println("Du har korten " + handTillSträng(spelare.getHand()) +
+//	  " Vilka kort vill du byta (skriv kortets nummer)");
+//
+//
+//	  while(sc.hasNextInt()){
+//	    spelare.changeCard(spelare.getHand().get(sc.nextInt()-1), kortlek.draw());
+//	  }
+//
 
-
-	  Scanner sc = new Scanner(System.in);
-
-	  System.out.println("Du har korten " + handTillSträng(spelare.getHand()) +
-	  " Vilka kort vill du byta (skriv kortets nummer)");
-
-
-	  while(sc.hasNextInt()){
-	    spelare.changeCard(spelare.getHand().get(sc.nextInt()-1), kortlek.draw());
-	  }
-
-
-		System.out.println("Du fick korten " + handTillSträng(spelare.getHand()) +
-		" och fick " + /*score() +*/ " poäng");
-		score();
-
-
-	  sc.close();
-	  }
+//		System.out.println("Du fick korten " + handTillSträng(spelare.getHand()) +
+//		" och fick " + /*score() +*/ " poäng");
+//		score();
+//
+//
+//	  sc.close();
+//	  }
 
 	@SuppressWarnings("unchecked")
-	public void score() {
+	public int score(ArrayList<Card> hand) {
 		// SCORE
-//		Instansieringen av Player bör kanske inte ligga här så småningom
+
 		String s = "";
-		Player p = new Player();
 
 		//sorterar vår lista
-		Collections.sort(p.getHand());
+		Collections.sort(hand);
 
 		//jämför korten mot varandra, två och två, och skriver sträng s som vi jämför med i själva score
 		for(int i = 0; i < 4; i++) {
-			if(p.getHand().get(i).getValue() == p.getHand().get(i + 1).getValue()) {
+			if(hand.get(i).getValue() == hand.get(i + 1).getValue()) {
 				s += "Par";
 			} else {
 				s += "Null";
@@ -83,41 +82,46 @@ public class VideoPoker {
 		if(s.contains("Stege") && !s.contains("Par")) {
 			if(s.contains("Färg")) {
 				System.out.println("STRAIGHT FLUSH!");
-				return;
+				return 50;
 			} else {
 			System.out.println("Stege!");
-			return;
+			return 4;
 			}
 
-		} else if (s.contains("ParParPar")) {
+		} else if(s.contains("Kungligt") && !s.contains("Par") && s.contains("Färg")) {
+
+			System.out.println("ROYAL FLUSH!");
+			return 800;
+
+			} else if (s.contains("ParParPar")) {
 			System.out.println("Fyrtal!");
-			return;
+			return 25;
 
 		} else if(s.contains("ParPar") && (s.startsWith("Par") && ((s.endsWith("Par")||(s.endsWith("ParStege")))))) {
 			System.out.println("Kåk!");
-			return;
+			return 9;
 
 		} else if(s.contains("ParPar")){
 			System.out.println("Triss!");
-			return;
+			return 3;
 
 		} else if ((s.matches("ParNullParNull"))||(s.matches("ParNullNullPar"))||(s.matches("NullParNullPar"))) {
 			System.out.println("Två Par!");
-			return;
+			return 2;
 
 		} else if (s.contains("Par")) {
 
 			dugerParet();
-			return;
+			return 1;
 
 		} else {
 			if(s.contains("Färg")) {
 				System.out.println("Färg!!!");
-				return;
+				return 6;
 
 			} else {
 			System.out.println("Sorry - du fick nada.");
-		}
+		} return 0;
 		}
 	}
 
@@ -144,30 +148,32 @@ public class VideoPoker {
 
 		} System.out.println("Du har ett par, men det suger!");
 	}
-	
+
 	public void betta(Player p, int summa) {
 		if(!p.placeBet(summa)) {
 			//Kicka spelare?
 		}
 	}
-	
-	
-	
-	
-	//Metoden kollar om olika kortkombinationer är stege. Tar även hänsyn till att ess kan vara 1 eller 14 i olika stegar. 
+
+
+
+
+	//Metoden kollar om olika kortkombinationer är stege. Tar även hänsyn till att ess kan vara 1 eller 14 i olika stegar.
 	public void isStege() {
 		int värde = 0;
 		for(int i = 1; i < 5; i++) {
 			värde += (spelare.getHand().get(i).getValue());
 		}
-		if((spelare.getHand().get(4).getValue()) == (spelare.getHand().get(0).getValue() + 4) || 
-				(spelare.getHand().get(0).getValue() == 1) && (värde == 46)){
-			
+		if((spelare.getHand().get(4).getValue()) == (spelare.getHand().get(0).getValue() + 4)) {
+
 			s += "Stege";
+		} else if ((spelare.getHand().get(0).getValue() == 1) && (värde == 46)){
+
+			s += "Kungligt";
 		}
 	}
-	
-	
+
+
 	public static void main(String[] args) {
 		VideoPoker poker = new VideoPoker();
 	}
