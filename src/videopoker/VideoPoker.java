@@ -46,7 +46,7 @@ public class VideoPoker {
 	}
 
 	@SuppressWarnings("unchecked")
-	public String score(ArrayList<Card> hand, String score) {
+	public int score(ArrayList<Card> hand, String score) {
 
 		// sorterar vår lista
 		Collections.sort(hand);
@@ -62,11 +62,7 @@ public class VideoPoker {
 		}
 		// kollar om man fått färg och lägger till det i sträng score
 		score = isFärg(hand, score);
-
-		return isStege(hand, score);
-	}
-
-	public int showScore(ArrayList<Card> hand, String score) {
+		score = isStege(hand, score);
 
 		// här ska vi lägga in bet och multiplicera med rätt faktor
 		if (score.contains("Stege") && !score.contains("Par")) {
@@ -77,7 +73,7 @@ public class VideoPoker {
 				System.out.println("Stege!");
 				return 4;
 			}
-		} else if (s.contains("Kungligt") && !s.contains("Par") && s.contains("Färg")) {
+		} else if (score.contains("Kungligt") && !score.contains("Par") && score.contains("Färg")) {
 
 			System.out.println("ROYAL FLUSH!");
 			return 800;
@@ -124,18 +120,6 @@ public class VideoPoker {
 		
 	}
 
-	//metod för att kolla om handen är i färg
-	private String isFärg(ArrayList<Card> hand, String score){
-		Suit färg = hand.get(0).getSuit();
-		for(int i = 1; i <hand.size(); i++){
-			if (hand.get(i).getSuit() != färg){
-				break;
-			}
-			score += "Färg";
-		}
-		return score;
-	}
-
 	public void dugerParet(ArrayList<Card> hand) {
 		for (int i = 0; i < 4; i++) {
 			if (hand.get(i).getValue() == hand.get(i + 1).getValue()) {
@@ -157,13 +141,28 @@ public class VideoPoker {
 	
 	//Metoden kollar om olika kortkombinationer är stege. Tar även hänsyn till att ess kan vara 1 eller 14 i olika stegar. 
 	public String isStege(ArrayList<Card> hand, String score) {
-		int värd = 1; i < 5; i++) {
+		int värde = 0;
+		for (int i = 1; i < 5; i++) {
 			värde += (hand.get(i).getValue());
 		}
-		if((hand.get(4).getValue()) == (hand.get(0).getValue() + 4) || 
-				(hand.get(0).getValue() == 1) && (värde == 46)){
-			
+		if ((hand.get(4).getValue()) == (hand.get(0).getValue() + 4)) {
+
 			score += "Stege";
+		} else if ((hand.get(0).getValue() == 1) && (värde == 46)) {
+
+			score += "Kungligt";
+		}
+		return score;
+	}
+	
+	//metod för att kolla om handen är i färg
+	private String isFärg(ArrayList<Card> hand, String score){
+		Suit färg = hand.get(0).getSuit();
+		for(int i = 1; i <hand.size(); i++){
+			if (hand.get(i).getSuit() != färg){
+				break;
+			}
+			score += "Färg";
 		}
 		return score;
 	}
