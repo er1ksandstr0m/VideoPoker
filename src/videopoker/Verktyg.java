@@ -56,12 +56,18 @@ public class Verktyg extends JPanel implements ActionListener{
 
 	private ImageIcon[] hand = new ImageIcon[5];
 
+	private int poäng;
+	VideoPoker vp;
+
+
+
 	public Verktyg(){
 
 		//setLayout(new GridLayout(3, 5, 0, 0));
 		setBackground(Color.BLUE);
 		spelare = new Player();
 		nyHand();
+		vp = new VideoPoker();
 
 
 		try{
@@ -156,6 +162,7 @@ public class Verktyg extends JPanel implements ActionListener{
 			for (int i = 0; i < buttons.length; i++) {
 				if (buttons[i].getIcon() == baksidaIkon) {
 					Card nyttKort = kortlek.draw();
+					spelare.changeCard(spelare.getHand().get(i), nyttKort);
 
 					try {
 						nyImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/" + nyttKort.getSymbol()
@@ -165,10 +172,18 @@ public class Verktyg extends JPanel implements ActionListener{
 					}
 					ImageIcon nyIcon = new ImageIcon(nyImage);
 					buttons[i].setIcon(nyIcon);
-					dealButton.setEnabled(false);
-					restartButton.setEnabled(true);
+					hand[i] = nyIcon;
+
+					}
+
 
 				}
+				dealButton.setEnabled(false);
+				restartButton.setEnabled(true);
+				poäng += vp.score(spelare.getHand());
+				poängtavla.setText("" + poäng);
+				for (JButton button : buttons) {
+					button.removeActionListener(this);
 
 			}
 		}
@@ -177,6 +192,11 @@ public class Verktyg extends JPanel implements ActionListener{
 			nyHand();
 			dealButton.setEnabled(true);
 			restartButton.setEnabled(false);
+
+			for (JButton button : buttons) {
+				button.addActionListener(this);
+			}
+
 
 		}
 

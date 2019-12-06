@@ -77,6 +77,10 @@ public class VideoPoker {
 				System.out.println("Stege!");
 				return 4;
 			}
+		} else if (s.contains("Kungligt") && !s.contains("Par") && s.contains("Färg")) {
+
+			System.out.println("ROYAL FLUSH!");
+			return 800;
 
 		} else if (score.contains("Kungligt") && !score.contains("Par") && score.contains("Färg")) {
 
@@ -144,17 +148,16 @@ public class VideoPoker {
 		}
 		System.out.println("Du har ett par, men det suger!");
 	}
-	
+
 	public void betta(Player p, int summa) {
-		if(!p.placeBet(summa)) {
-			//Kicka spelare?
+		if (!p.placeBet(summa)) {
+			// Kicka spelare?
 		}
 	}
 	
 	//Metoden kollar om olika kortkombinationer är stege. Tar även hänsyn till att ess kan vara 1 eller 14 i olika stegar. 
 	public String isStege(ArrayList<Card> hand, String score) {
-		int värde = 0;
-		for(int i = 1; i < 5; i++) {
+		int värd = 1; i < 5; i++) {
 			värde += (hand.get(i).getValue());
 		}
 		if((hand.get(4).getValue()) == (hand.get(0).getValue() + 4) || 
@@ -166,7 +169,7 @@ public class VideoPoker {
 	}
 	
 	public void rageQuit() {
-// Framtida sparning här 
+// Framtida sparning här
 		System.exit(0);
 	}
 }
