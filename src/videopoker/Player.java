@@ -17,7 +17,7 @@ public class Player {
 
 	/**
 	 * Skapar spelare med gammal plånbok och hand.
-	 * 
+	 *
 	 * @param oldWallet
 	 * @param oldHand
 	 */
@@ -25,15 +25,11 @@ public class Player {
 		hand = oldHand;
 		wallet = oldWallet;
 
-<<<<<<< HEAD
 	}
-=======
-
->>>>>>> branch 'master' of https://github.com/er1ksandstr0m/VideoPoker.git
 
 	/**
 	 * Lägg till pengar i plånboken
-	 * 
+	 *
 	 * @param money
 	 */
 	public void addMoney(int money) {
@@ -42,7 +38,7 @@ public class Player {
 
 	/**
 	 * Gör försök att ta ut pengar. Returnerar om uttaget går bra eller ej.
-	 * 
+	 *
 	 * @param withdrawMoney
 	 * @return true om spelaren har råd med uttaget, annars false.
 	 */
@@ -57,7 +53,7 @@ public class Player {
 
 	/**
 	 * Gör försök att ta ut pengar. Returnerar om uttaget går bra eller ej.
-	 * 
+	 *
 	 * @param pBet
 	 * @return true om spelaren har råd med bet, annars false.
 	 */
@@ -74,7 +70,7 @@ public class Player {
 
 	/**
 	 * Gör försök att ta ut pengar. Returnerar om uttaget går bra eller ej.
-	 * 
+	 *
 	 * @return spelarens nuvarande bet
 	 */
 	public int getBet() {
@@ -90,7 +86,7 @@ public class Player {
 
 	/**
 	 * Returnerar plånboken.
-	 * 
+	 *
 	 * @return wallet
 	 */
 	public int getWallet() {
@@ -99,7 +95,7 @@ public class Player {
 
 	/**
 	 * Lägger till ett kort till handen.
-	 * 
+	 *
 	 * @param card Det nya kortet
 	 */
 	public void addCardToHand(Card card) {
@@ -108,7 +104,7 @@ public class Player {
 
 	/**
 	 * Byter ut ett kort i handen till ett nytt kort.
-	 * 
+	 *
 	 * @param oldCard Kortet som ska bytas ut
 	 * @param newCard Kortet som ska bytas in
 	 */

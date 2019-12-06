@@ -57,6 +57,9 @@ public class Verktyg extends JPanel implements ActionListener{
 
 	private ImageIcon[] hand = new ImageIcon[5];
 
+	private int poäng;
+	VideoPoker vp;
+
 
 
 	public Verktyg(){
@@ -65,6 +68,7 @@ public class Verktyg extends JPanel implements ActionListener{
 		setBackground(Color.BLUE);
 		spelare = new Player();
 		nyHand();
+		vp = new VideoPoker();
 
 
 
@@ -174,6 +178,11 @@ public class Verktyg extends JPanel implements ActionListener{
 					hand[i] = nyIcon;
 					dealButton.setEnabled(false);
 					restartButton.setEnabled(true);
+					poäng += vp.score(spelare.getHand());
+					poängtavla.setText("" + poäng);
+					for (JButton button : buttons) {
+						button.removeActionListener(this);
+					}
 
 				}
 
@@ -184,6 +193,11 @@ public class Verktyg extends JPanel implements ActionListener{
 			nyHand();
 			dealButton.setEnabled(true);
 			restartButton.setEnabled(false);
+
+			for (JButton button : buttons) {
+				button.addActionListener(this);
+			}
+
 
 		}
 
