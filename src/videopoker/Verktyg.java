@@ -161,6 +161,7 @@ public class Verktyg extends JPanel implements ActionListener{
 			for (int i = 0; i < buttons.length; i++) {
 				if (buttons[i].getIcon() == baksidaIkon) {
 					Card nyttKort = kortlek.draw();
+					spelare.changeCard(spelare.getHand().get(i), nyttKort);
 
 					try {
 						nyImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/" + nyttKort.getSymbol()
@@ -170,6 +171,7 @@ public class Verktyg extends JPanel implements ActionListener{
 					}
 					ImageIcon nyIcon = new ImageIcon(nyImage);
 					buttons[i].setIcon(nyIcon);
+					hand[i] = nyIcon;
 					dealButton.setEnabled(false);
 					restartButton.setEnabled(true);
 
