@@ -25,15 +25,14 @@ public class Ritare extends JFrame{
 	public Ritare() {
 
 
-
-		setLayout(new BorderLayout());
-
-		add(panel, BorderLayout.CENTER);
-		panel.setBackground(Color.BLUE);
-		panel.add(verktyg);
+		// setLayout(new BorderLayout());
+		//
+		// add(panel, BorderLayout.CENTER);
+		// panel.setBackground(Color.BLUE);
+		add(verktyg);
 
 		setBackground(Color.BLUE);
-		setSize(new Dimension(300, 200));
+		setSize(new Dimension(1000, 1000));
 		pack();
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

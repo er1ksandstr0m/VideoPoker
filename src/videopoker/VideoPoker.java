@@ -1,7 +1,6 @@
 package videopoker;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -49,6 +48,7 @@ public class VideoPoker {
 	@SuppressWarnings("unchecked")
 	public String score(Player p) {
 
+<<<<<<< HEAD
 		// sorterar vår lista
 		Collections.sort(p.getHand());
 
@@ -61,18 +61,15 @@ public class VideoPoker {
 				p.setScore("Null");
 			}
 		}
-		// kollar om man fått färg och lägger till det i sträng s
-		isFärg(p.getHand());
+		//kollar om man fått färg och lägger till det i sträng s
+		isFärg();
 
-		// kollar om sista kortet i listan är 4 större än det första, lägger till det i
-		// strängen
-		if ((p.getHand().get(4).getValue()) == (p.getHand().get(0).getValue() + 4)) {
-			s += "Stege";
-		}
-		
-		// här ska vi lägga in bet och multiplicera med rätt faktor
-		if (s.contains("Stege") && !s.contains("Par")) {
-			if (s.contains("Färg")) {
+		//kollar om det är en stege och lägger till det i strängen
+		isStege();
+
+		//här ska vi lägga in bet och multiplicera med rätt faktor
+		if(s.contains("Stege") && !s.contains("Par")) {
+			if(s.contains("Färg")) {
 				System.out.println("STRAIGHT FLUSH!");
 				return;
 			} else {
@@ -84,24 +81,28 @@ public class VideoPoker {
 			System.out.println("Fyrtal!");
 			return;
 
-		} else if (s.contains("ParPar") && (s.startsWith("Par") && ((s.endsWith("Par") || (s.endsWith("ParStege")))))) {
+		} else if(s.contains("ParPar") && (s.startsWith("Par") && ((s.endsWith("Par")||(s.endsWith("ParStege")))))) {
 			System.out.println("Kåk!");
 			return;
 
-		} else if (s.contains("ParPar")) {
+		} else if(s.contains("ParPar")){
 			System.out.println("Triss!");
 			return;
 
-		} else if ((s.matches("ParNullParNull")) || (s.matches("ParNullNullPar")) || (s.matches("NullParNullPar"))) {
+		} else if ((s.matches("ParNullParNull"))||(s.matches("ParNullNullPar"))||(s.matches("NullParNullPar"))) {
 			System.out.println("Två Par!");
 			return;
+			
 		} else if (s.contains("Par")) {
-			System.out.println("Ett par!");
+			
+			dugerParet();
 			return;
+			
 		} else {
 			if (s.contains("Färg")) {
 				System.out.println("Färg!!!");
 				return;
+				
 			} else {
 				System.out.println("Sorry - du fick nada.");
 			}
@@ -124,4 +125,47 @@ public class VideoPoker {
 		}
 	}
 
+	public void dugerParet() {
+	for(int i = 0; i < 4; i++) {
+		if(spelare.getHand().get(i).getValue() == spelare.getHand().get(i + 1).getValue()) {
+			if(spelare.getHand().get(i).getValue() >10) {
+				System.out.println("Du har ett par som duger!!");
+				return;
+			}	
+		} 
+		
+		} System.out.println("Du har ett par, men det suger!");
+	}
+	
+	public void betta(Player p, int summa) {
+		if(!p.placeBet(summa)) {
+			//Kicka spelare?
+		}
+	}
+	
+	
+	
+	
+	//Metoden kollar om olika kortkombinationer är stege. Tar även hänsyn till att ess kan vara 1 eller 14 i olika stegar. 
+	public void isStege() {
+		int värde = 0;
+		for(int i = 1; i < 5; i++) {
+			värde += (spelare.getHand().get(i).getValue());
+		}
+		if((spelare.getHand().get(4).getValue()) == (spelare.getHand().get(0).getValue() + 4) || 
+				(spelare.getHand().get(0).getValue() == 1) && (värde == 46)){
+			
+			s += "Stege";
+		}
+	}
+	
+	
+	public static void main(String[] args) {
+		VideoPoker poker = new VideoPoker();
+	}
+	
+	public void rageQuit() {
+// Framtida sparning här 
+		System.exit(0);
+	}
 }
