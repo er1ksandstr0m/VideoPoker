@@ -61,10 +61,10 @@ public class VideoPoker {
 //		Instansieringen av Player bör kanske inte ligga här så småningom
 		String s = "";
 		Player p = new Player();
-		
+
 		//sorterar vår lista
 		Collections.sort(p.getHand());
-		
+
 		//jämför korten mot varandra, två och två, och skriver sträng s som vi jämför med i själva score
 		for(int i = 0; i < 4; i++) {
 			if(p.getHand().get(i).getValue() == p.getHand().get(i + 1).getValue()) {
@@ -75,12 +75,12 @@ public class VideoPoker {
 		}
 		//kollar om man fått färg och lägger till det i sträng s
 		isFärg();
-		
+
 		//kollar om sista kortet i listan är 4 större än det första, lägger till det i strängen
 		if((p.getHand().get(4).getValue()) == (p.getHand().get(0).getValue() + 4)){
 			s += "Stege";
 		}
-		
+
 		//här ska vi lägga in bet och multiplicera med rätt faktor
 		if(s.contains("Stege") && !s.contains("Par")) {
 			if(s.contains("Färg")) {
@@ -90,19 +90,19 @@ public class VideoPoker {
 			System.out.println("Stege!");
 			return;
 			}
-			
+
 		} else if (s.contains("ParParPar")) {
 			System.out.println("Fyrtal!");
 			return;
-			
+
 		} else if(s.contains("ParPar") && (s.startsWith("Par") && ((s.endsWith("Par")||(s.endsWith("ParStege")))))) {
 			System.out.println("Kåk!");
 			return;
-			
+
 		} else if(s.contains("ParPar")){
 			System.out.println("Triss!");
 			return;
-			
+
 		} else if ((s.matches("ParNullParNull"))||(s.matches("ParNullNullPar"))||(s.matches("NullParNullPar"))) {
 			System.out.println("Två Par!");
 			return;
