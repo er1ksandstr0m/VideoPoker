@@ -97,7 +97,7 @@ public class VideoPoker {
 			System.out.println("Fyrtal!");
 			return 25;
 
-		} else if(s.contains("ParPar") && (s.startsWith("Par") && ((s.endsWith("Par")||(s.endsWith("ParStege")))))) {
+		} else if(s.contains("ParPar") && (s.startsWith("Par") && ((s.endsWith("Par")||(s.endsWith("ParStege")||(s.endsWith("ParKungligt"))))))) {
 			System.out.println("Kåk!");
 			return 9;
 
@@ -140,7 +140,7 @@ public class VideoPoker {
 	public void dugerParet() {
 	for(int i = 0; i < 4; i++) {
 		if(spelare.getHand().get(i).getValue() == spelare.getHand().get(i + 1).getValue()) {
-			if(spelare.getHand().get(i).getValue() >10) {
+			if(spelare.getHand().get(i).getValue() > 10) {
 				System.out.println("Du har ett par som duger!!");
 				return;
 			}
