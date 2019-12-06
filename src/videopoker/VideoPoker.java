@@ -149,4 +149,9 @@ public class VideoPoker {
 	public static void main(String[] args) {
 		VideoPoker poker = new VideoPoker();
 	}
+	
+	public void rageQuit() {
+// Framtida sparning här 
+		System.exit(0);
+	}
 }
