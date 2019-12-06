@@ -87,9 +87,9 @@ public class Verktyg extends JPanel implements ActionListener{
 		kortPanel.setBackground(Color.BLUE);
 
 		try {
-			dealButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Deal.png").toURI()));
-			standButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Stand.png").toURI()));
-			restartButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Restart.png").toURI()));
+			dealButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort2/Deal.png").toURI()));
+			standButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort2/Stand.png").toURI()));
+			restartButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort2/Restart.png").toURI()));
 		} catch (Exception ex) {
 			System.out.println("Filen hittades inte eller det blev nåt uri-skit");
 		}
@@ -131,7 +131,7 @@ public class Verktyg extends JPanel implements ActionListener{
 
 
 		try {
-			baksida = ImageIO.read(new File(Verktyg.class.getResource("Kort/Baksida.png").toURI()));
+			baksida = ImageIO.read(new File(Verktyg.class.getResource("Kort2/Baksida.png").toURI()));
 		} catch (Exception ex) {
 			System.out.println("Filen hittades inte eller nåt");
 		}
@@ -168,7 +168,7 @@ public class Verktyg extends JPanel implements ActionListener{
 					spelare.changeCard(spelare.getHand().get(i), nyttKort);
 
 					try {
-						nyImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/" + nyttKort.getSymbol()
+						nyImage = ImageIO.read(new File(Verktyg.class.getResource("Kort2/" + nyttKort.getSymbol()
 								+ nyttKort.getValue() + ".png").toURI()));
 					} catch (Exception ex) {
 						System.out.println("Filen hittades inte typ");
@@ -176,15 +176,17 @@ public class Verktyg extends JPanel implements ActionListener{
 					ImageIcon nyIcon = new ImageIcon(nyImage);
 					buttons[i].setIcon(nyIcon);
 					hand[i] = nyIcon;
-					dealButton.setEnabled(false);
-					restartButton.setEnabled(true);
-					poäng += vp.score(spelare.getHand());
-					poängtavla.setText("" + poäng);
-					for (JButton button : buttons) {
-						button.removeActionListener(this);
+
 					}
 
+
 				}
+				dealButton.setEnabled(false);
+				restartButton.setEnabled(true);
+				poäng += vp.score(spelare.getHand());
+				poängtavla.setText("" + poäng);
+				for (JButton button : buttons) {
+					button.removeActionListener(this);
 
 			}
 		}
@@ -221,7 +223,7 @@ public class Verktyg extends JPanel implements ActionListener{
 		// hämtar bilderna för spelarens hand
 		for (int i = 0; i < spelare.getHand().size(); i++) {
 			try {
-				image = ImageIO.read(new File(Verktyg.class.getResource("Kort/"+ spelare.getHand().get(i).getSymbol()
+				image = ImageIO.read(new File(Verktyg.class.getResource("Kort2/"+ spelare.getHand().get(i).getSymbol()
 				+ spelare.getHand().get(i).getValue() + ".png").toURI()));
 
 			} catch (Exception ex) {
