@@ -143,7 +143,7 @@ public class VideoPoker {
 	public boolean dugerParet() {
 		for (int i = 0; i < 4; i++) {
 			if (spelare.getHand().get(i).getValue() == spelare.getHand().get(i + 1).getValue()) {
-				if (spelare.getHand().get(i).getValue() > 10) {
+				if (spelare.getHand().get(i).getValue() > 10||spelare.getHand().get(i).getValue()==1) {
 					System.out.println("Du har ett par som duger!!");
 					return true;
 				}
