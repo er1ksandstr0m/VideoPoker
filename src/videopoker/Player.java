@@ -13,7 +13,7 @@ public class Player {
 		hand = new ArrayList<Card>();
 		wallet = 0;
 	}
-	
+
 	/**
 	 * Skapar spelare med gammal plånbok och hand.
 	 * @param oldWallet
@@ -24,7 +24,7 @@ public class Player {
 		wallet = 0;
 	}
 
-	
+
 
 	/**
 	 * Lägg till pengar i plånboken
@@ -63,7 +63,7 @@ public class Player {
 	public void addCardToHand(Card card) {
 		hand.add(card);
 	}
-	
+
 	/**
 	 * Byter ut ett kort i handen till ett nytt kort.
 	 * @param oldCard Kortet som ska bytas ut

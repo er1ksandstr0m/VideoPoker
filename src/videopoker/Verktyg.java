@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.Dimension;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -30,6 +33,11 @@ public class Verktyg extends JPanel implements ActionListener{
 	private ImageIcon restartButtonIcon;
 	private BufferedImage nyImage;
 
+	private BufferedImage regelImage;
+	private ImageIcon regelIcon;
+	private JPanel regelPanel = new JPanel();
+	private JLabel regelLabel;
+
 	private JButton b1 = new JButton();
 	private JButton b2 = new JButton();
 	private JButton b3 = new JButton();
@@ -49,14 +57,29 @@ public class Verktyg extends JPanel implements ActionListener{
 
 	private ImageIcon[] hand = new ImageIcon[5];
 
+
+
 	public Verktyg(){
 
-		setLayout(new GridLayout(2, 5));
-
+		//setLayout(new GridLayout(3, 5, 0, 0));
+		setBackground(Color.BLUE);
 		spelare = new Player();
 		nyHand();
 
-		add(kortPanel);
+
+
+
+		try{
+			regelImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/FiveCardPoker2.png").toURI()));
+		}
+		catch(Exception ex){
+			System.out.println("Filen hittades inte eller toURIExeption");
+		}
+
+		regelLabel = new JLabel(new ImageIcon(regelImage));
+		regelPanel.add(regelLabel);
+
+
 		kortPanel.setBackground(Color.BLUE);
 
 		try {
@@ -74,7 +97,16 @@ public class Verktyg extends JPanel implements ActionListener{
 		restartButtonIcon = new ImageIcon(restartButtonImage);
 		restartButton.setIcon(restartButtonIcon);
 
+		//setSize(800,100);
+		add(regelPanel);
+		add(kortPanel);
 		add(knappanel);
+
+		 // kortPanel.setPreferredSize(new Dimension(700, 400));
+		 // regelPanel.setPreferredSize(new Dimension(700, 400));
+		 // knappanel.setPreferredSize(new Dimension(700, 400));
+
+
 		knappanel.setBackground(Color.BLUE);
 		knappanel.add(dealButton);
 		knappanel.add(standButton);
@@ -92,6 +124,8 @@ public class Verktyg extends JPanel implements ActionListener{
 		poängtavla.setForeground(Color.YELLOW);
 		poängtavleEtikett.setForeground(Color.YELLOW);
 
+
+
 		try {
 			baksida = ImageIO.read(new File(Verktyg.class.getResource("Kort/Baksida.png").toURI()));
 		} catch (Exception ex) {
@@ -103,6 +137,7 @@ public class Verktyg extends JPanel implements ActionListener{
 		for (JButton button : buttons) {
 			button.addActionListener(this);
 		}
+
 
 	}
 
