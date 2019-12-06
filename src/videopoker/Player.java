@@ -24,12 +24,9 @@ public class Player {
 	public Player(int oldWallet, ArrayList<Card> oldHand) {
 		hand = oldHand;
 		wallet = oldWallet;
+		}
 
-<<<<<<< HEAD
-	}
-=======
 
->>>>>>> branch 'master' of https://github.com/er1ksandstr0m/VideoPoker.git
 
 	/**
 	 * Lägg till pengar i plånboken
