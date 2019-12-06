@@ -57,16 +57,10 @@ public class VideoPoker {
 
 	public void score() {
 		// SCORE
-<<<<<<< HEAD
 		s = "";
 		int p = 0;
 
 		int[] array = { 1, 3, 2, 2, 1 };
-=======
-		String s = "";
-
-		int[] array = {9, 1, 3, 9, 2};
->>>>>>> 1e14102ca42ced16609954e06dd01ec9318f32f0
 		Arrays.sort(array);
 		for(int i = 0; i < array.length; i++) {
 			System.out.println(array[i]);
@@ -120,6 +114,7 @@ public class VideoPoker {
 	}
 
 	public static void main(String[] args) {
+		
 		VideoPoker poker = new VideoPoker();
 	}
 }
