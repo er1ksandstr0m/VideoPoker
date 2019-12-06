@@ -106,13 +106,17 @@ public class VideoPoker {
 		} else if ((s.matches("ParNullParNull"))||(s.matches("ParNullNullPar"))||(s.matches("NullParNullPar"))) {
 			System.out.println("Två Par!");
 			return;
+			
 		} else if (s.contains("Par")) {
-			System.out.println("Ett par!");
+			
+			dugerParet();
 			return;
+			
 		} else {
 			if(s.contains("Färg")) {
 				System.out.println("Färg!!!");
 				return;
+				
 			} else {
 			System.out.println("Sorry - du fick nada.");
 		}
@@ -130,7 +134,18 @@ public class VideoPoker {
 			s += "Färg";
 		}
 	}
-
+	
+	public void dugerParet() {
+	for(int i = 0; i < 4; i++) {
+		if(spelare.getHand().get(i).getValue() == spelare.getHand().get(i + 1).getValue()) {
+			if(spelare.getHand().get(i).getValue() >10) {
+				System.out.println("Du har ett par som duger!!");
+				return;
+			}	
+		} 
+		
+		} System.out.println("Du har ett par, men det suger!");
+	}
 	public static void main(String[] args) {
 		VideoPoker poker = new VideoPoker();
 	}
