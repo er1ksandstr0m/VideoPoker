@@ -26,10 +26,6 @@ public class Player {
 		wallet = oldWallet;
 		}
 
-<<<<<<< Updated upstream
-=======
-	}
->>>>>>> Stashed changes
 
 	/**
 	 * Lägg till pengar i plånboken
