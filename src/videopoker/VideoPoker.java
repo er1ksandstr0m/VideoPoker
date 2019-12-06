@@ -46,95 +46,103 @@ public class VideoPoker {
 	}
 
 	@SuppressWarnings("unchecked")
-	public String score(Player p) {
+	public String score(ArrayList<Card> hand, String score) {
 
-<<<<<<< HEAD
 		// sorterar vår lista
-		Collections.sort(p.getHand());
+		Collections.sort(hand);
 
-		// jämför korten mot varandra, två och två, och skriver sträng s som vi jämför
+		// jämför korten mot varandra, två och två, och skriver sträng score som vi
 		// med i själva score
 		for (int i = 0; i < 4; i++) {
-			if (p.getHand().get(i).getValue() == p.getHand().get(i + 1).getValue()) {
-				p.setScore("Par");
+			if (hand.get(i).getValue() == hand.get(i + 1).getValue()) {
+				score += "Par";
 			} else {
-				p.setScore("Null");
+				score += "Null";
 			}
 		}
-		//kollar om man fått färg och lägger till det i sträng s
-		isFärg();
+		// kollar om man fått färg och lägger till det i sträng score
+		score = isFärg(hand, score);
 
-		//kollar om det är en stege och lägger till det i strängen
-		isStege();
+		return isStege(hand, score);
+	}
 
-		//här ska vi lägga in bet och multiplicera med rätt faktor
-		if(s.contains("Stege") && !s.contains("Par")) {
-			if(s.contains("Färg")) {
+	public int showScore(ArrayList<Card> hand, String score) {
+
+		// här ska vi lägga in bet och multiplicera med rätt faktor
+		if (score.contains("Stege") && !score.contains("Par")) {
+			if (score.contains("Färg")) {
 				System.out.println("STRAIGHT FLUSH!");
-				return;
+				return 50;
 			} else {
 				System.out.println("Stege!");
-				return;
+				return 4;
 			}
 
-		} else if (s.contains("ParParPar")) {
+		} else if (score.contains("Kungligt") && !score.contains("Par") && score.contains("Färg")) {
+
+			System.out.println("ROYAL FLUSH!");
+			return 800;
+
+		} else if (score.contains("ParParPar")) {
 			System.out.println("Fyrtal!");
-			return;
+			return 25;
 
-		} else if(s.contains("ParPar") && (s.startsWith("Par") && ((s.endsWith("Par")||(s.endsWith("ParStege")))))) {
+		} else if (score.contains("ParPar") && (score.startsWith("Par") && ((score.endsWith("Par") || (score.endsWith("ParStege")))))) {
 			System.out.println("Kåk!");
-			return;
+			return 9;
 
-		} else if(s.contains("ParPar")){
+		} else if (score.contains("ParPar")) {
 			System.out.println("Triss!");
-			return;
+			return 3;
 
-		} else if ((s.matches("ParNullParNull"))||(s.matches("ParNullNullPar"))||(s.matches("NullParNullPar"))) {
+		} else if ((score.matches("ParNullParNull")) || (score.matches("ParNullNullPar")) || (score.matches("NullParNullPar"))) {
 			System.out.println("Två Par!");
-			return;
-			
-		} else if (s.contains("Par")) {
-			
-			dugerParet();
-			return;
-			
+			return 2;
+
+		} else if (score.contains("Par")) {
+
+			dugerParet(hand);
+			return 1;
+
 		} else {
-			if (s.contains("Färg")) {
+			if (score.contains("Färg")) {
 				System.out.println("Färg!!!");
-				return;
-				
+				return 6;
+
 			} else {
 				System.out.println("Sorry - du fick nada.");
 			}
+			return 0;
 		}
 	}
-	
+
 	public void compareScores() {
 		
 	}
 
 	//metod för att kolla om handen är i färg
-	private void isFärg(ArrayList<Card> hand){
+	private String isFärg(ArrayList<Card> hand, String score){
 		Suit färg = hand.get(0).getSuit();
 		for(int i = 1; i <hand.size(); i++){
 			if (hand.get(i).getSuit() != färg){
-//				s += "Null";
 				break;
 			}
-			s += "Färg";
+			score += "Färg";
 		}
+		return score;
 	}
 
-	public void dugerParet() {
-	for(int i = 0; i < 4; i++) {
-		if(spelare.getHand().get(i).getValue() == spelare.getHand().get(i + 1).getValue()) {
-			if(spelare.getHand().get(i).getValue() >10) {
-				System.out.println("Du har ett par som duger!!");
-				return;
-			}	
-		} 
-		
-		} System.out.println("Du har ett par, men det suger!");
+	public void dugerParet(ArrayList<Card> hand) {
+		for (int i = 0; i < 4; i++) {
+			if (hand.get(i).getValue() == hand.get(i + 1).getValue()) {
+				if (hand.get(i).getValue() > 10) {
+					System.out.println("Du har ett par som duger!!");
+					return;
+				}
+			}
+
+		}
+		System.out.println("Du har ett par, men det suger!");
 	}
 	
 	public void betta(Player p, int summa) {
@@ -143,25 +151,18 @@ public class VideoPoker {
 		}
 	}
 	
-	
-	
-	
 	//Metoden kollar om olika kortkombinationer är stege. Tar även hänsyn till att ess kan vara 1 eller 14 i olika stegar. 
-	public void isStege() {
+	public String isStege(ArrayList<Card> hand, String score) {
 		int värde = 0;
 		for(int i = 1; i < 5; i++) {
-			värde += (spelare.getHand().get(i).getValue());
+			värde += (hand.get(i).getValue());
 		}
-		if((spelare.getHand().get(4).getValue()) == (spelare.getHand().get(0).getValue() + 4) || 
-				(spelare.getHand().get(0).getValue() == 1) && (värde == 46)){
+		if((hand.get(4).getValue()) == (hand.get(0).getValue() + 4) || 
+				(hand.get(0).getValue() == 1) && (värde == 46)){
 			
-			s += "Stege";
+			score += "Stege";
 		}
-	}
-	
-	
-	public static void main(String[] args) {
-		VideoPoker poker = new VideoPoker();
+		return score;
 	}
 	
 	public void rageQuit() {
