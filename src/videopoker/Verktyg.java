@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 
 public class Verktyg extends JPanel implements ActionListener{
 
-	private Player spelare;
+	private Player vp.getSpelare();
 	private Deck kortlek;
 
 	private BufferedImage baksida;
@@ -66,7 +66,7 @@ public class Verktyg extends JPanel implements ActionListener{
 
 		//setLayout(new GridLayout(3, 5, 0, 0));
 		setBackground(Color.BLUE);
-		spelare = new Player();
+		//vp.getSpelare() = new Player();
 		nyHand();
 		vp = new VideoPoker();
 
@@ -165,7 +165,7 @@ public class Verktyg extends JPanel implements ActionListener{
 			for (int i = 0; i < buttons.length; i++) {
 				if (buttons[i].getIcon() == baksidaIkon) {
 					Card nyttKort = kortlek.draw();
-					spelare.changeCard(spelare.getHand().get(i), nyttKort);
+					vp.getSpelare().changeCard(vp.getSpelare().getHand().get(i), nyttKort);
 
 					try {
 						nyImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/" + nyttKort.getSymbol()
@@ -183,7 +183,7 @@ public class Verktyg extends JPanel implements ActionListener{
 				}
 				dealButton.setEnabled(false);
 				restartButton.setEnabled(true);
-				poäng += vp.score(spelare.getHand());
+				poäng += vp.score(vp.getSpelare().getHand());
 				poängtavla.setText("" + poäng);
 				for (JButton button : buttons) {
 					button.removeActionListener(this);
@@ -211,20 +211,20 @@ public class Verktyg extends JPanel implements ActionListener{
 		kortlek = new Deck();
 		kortlek.shuffle();
 
-		if (spelare.getHand().size() > 0) {
-			spelare.reset();
+		if (vp.getSpelare().getHand().size() > 0) {
+			vp.getSpelare().reset();
 		}
 
 		for (int i = 0; i < 5; i++) {
-			spelare.addCardToHand(kortlek.draw());
+			vp.getSpelare().addCardToHand(kortlek.draw());
 
 		}
 
-		// hämtar bilderna för spelarens hand
-		for (int i = 0; i < spelare.getHand().size(); i++) {
+		// hämtar bilderna för vp.getSpelare()ns hand
+		for (int i = 0; i < vp.getSpelare().getHand().size(); i++) {
 			try {
-				image = ImageIO.read(new File(Verktyg.class.getResource("Kort/"+ spelare.getHand().get(i).getSymbol()
-				+ spelare.getHand().get(i).getValue() + ".png").toURI()));
+				image = ImageIO.read(new File(Verktyg.class.getResource("Kort/"+ vp.getSpelare().getHand().get(i).getSymbol()
+				+ vp.getSpelare().getHand().get(i).getValue() + ".png").toURI()));
 
 			} catch (Exception ex) {
 				System.out.println("Filen hittades inte/URI");
