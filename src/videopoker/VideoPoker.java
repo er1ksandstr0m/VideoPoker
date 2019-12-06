@@ -12,10 +12,10 @@ public class VideoPoker {
 	public Player getSpelare() {
 		return spelare;
 	}
-	
-	public VideoPoker() {
 
-		spelare = new Player();
+	public VideoPoker(Player spelare) {
+
+		this.spelare = spelare;
 		kortlek = new Deck();
 
 		kortlek.shuffle();
@@ -182,9 +182,9 @@ public class VideoPoker {
 		}
 	}
 
-	public static void main(String[] args) {
-		VideoPoker poker = new VideoPoker();
-	}
+	// public static void main(String[] args) {
+	// 	VideoPoker poker = new VideoPoker();
+	// }
 
 	public void rageQuit() {
 // Framtida sparning här
