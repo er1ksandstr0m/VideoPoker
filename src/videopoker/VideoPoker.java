@@ -1,7 +1,6 @@
 package videopoker;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -56,6 +55,7 @@ public class VideoPoker {
 	  sc.close();
 	  }
 
+	@SuppressWarnings("unchecked")
 	public void score() {
 		// SCORE
 //		Instansieringen av Player bör kanske inte ligga här så småningom
