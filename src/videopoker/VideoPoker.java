@@ -131,6 +131,13 @@ public class VideoPoker {
 		}
 	}
 
+	
+	public void betta(Player p, int summa) {
+		if(!p.placeBet(summa)) {
+			//Kicka spelare?
+		}
+	}
+	
 	public static void main(String[] args) {
 		
 		VideoPoker poker = new VideoPoker();
