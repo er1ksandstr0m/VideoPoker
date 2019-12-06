@@ -76,10 +76,8 @@ public class VideoPoker {
 		//kollar om man fått färg och lägger till det i sträng s
 		isFärg();
 
-		//kollar om sista kortet i listan är 4 större än det första, lägger till det i strängen
-		if((p.getHand().get(4).getValue()) == (p.getHand().get(0).getValue() + 4)){
-			s += "Stege";
-		}
+		//kollar om det är en stege och lägger till det i strängen
+		isStege();
 
 		//här ska vi lägga in bet och multiplicera med rätt faktor
 		if(s.contains("Stege") && !s.contains("Par")) {
@@ -135,10 +133,11 @@ public class VideoPoker {
 		}
 	}
 	
+	//Kollar om par är knekt eller högre.
 	public void dugerParet() {
 	for(int i = 0; i < 4; i++) {
 		if(spelare.getHand().get(i).getValue() == spelare.getHand().get(i + 1).getValue()) {
-			if(spelare.getHand().get(i).getValue() >10) {
+			if(spelare.getHand().get(i).getValue() >10 || spelare.getHand().get(i).getValue() == 1) {
 				System.out.println("Du har ett par som duger!!");
 				return;
 			}	
@@ -146,6 +145,21 @@ public class VideoPoker {
 		
 		} System.out.println("Du har ett par, men det suger!");
 	}
+	
+	//Metoden kollar om olika kortkombinationer är stege. Tar även hänsyn till att ess kan vara 1 eller 14 i olika stegar. 
+	public void isStege() {
+		int värde = 0;
+		for(int i = 1; i < 5; i++) {
+			värde += (spelare.getHand().get(i).getValue());
+		}
+		if((spelare.getHand().get(4).getValue()) == (spelare.getHand().get(0).getValue() + 4) || 
+				(spelare.getHand().get(0).getValue() == 1) && (värde == 46)){
+			
+			s += "Stege";
+		}
+	}
+	
+	
 	public static void main(String[] args) {
 		VideoPoker poker = new VideoPoker();
 	}
