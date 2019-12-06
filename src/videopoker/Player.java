@@ -1,6 +1,7 @@
 package videopoker;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Player {
 	private ArrayList<Card> hand;

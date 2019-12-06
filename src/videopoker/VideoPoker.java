@@ -34,36 +34,20 @@ public class VideoPoker {
 
 	}
 
-	public void bytKort(Player p, Scanner sc) {
-
-		System.out.println(
-				"Du har korten " + handTillSträng(p.getHand()) + " Vilka kort vill du byta (skriv kortets nummer)");
-
-		while (sc.hasNextInt()) {
-			p.changeCard(p.getHand().get(sc.nextInt() - 1), kortlek.draw());
-		}
-
-	}
-
 	@SuppressWarnings("unchecked")
 	public int score(ArrayList<Card> hand, String score) {
-
 		// sorterar vår lista
 		Collections.sort(hand);
+		score = hasPairs(hand, score);
+		// kollar om man fått färg och lägger till det i strängen score
+		score = isColor(hand, score);
+		// kollar om man fått stege och lägger till det i strängen score
+		score = isStraight(hand, score);
+		
+		return selectScore(hand, score);
+	}
 
-		// jämför korten mot varandra, två och två, och skriver sträng score som vi
-		// med i själva score
-		for (int i = 0; i < 4; i++) {
-			if (hand.get(i).getValue() == hand.get(i + 1).getValue()) {
-				score += "Par";
-			} else {
-				score += "Null";
-			}
-		}
-		// kollar om man fått färg och lägger till det i sträng score
-		score = isFärg(hand, score);
-		score = isStege(hand, score);
-
+	private int selectScore(ArrayList<Card> hand, String score) {
 		// här ska vi lägga in bet och multiplicera med rätt faktor
 		if (score.contains("Stege") && !score.contains("Par")) {
 			if (score.contains("Färg")) {
@@ -73,11 +57,6 @@ public class VideoPoker {
 				System.out.println("Stege!");
 				return 4;
 			}
-		} else if (score.contains("Kungligt") && !score.contains("Par") && score.contains("Färg")) {
-
-			System.out.println("ROYAL FLUSH!");
-			return 800;
-
 		} else if (score.contains("Kungligt") && !score.contains("Par") && score.contains("Färg")) {
 
 			System.out.println("ROYAL FLUSH!");
@@ -113,7 +92,7 @@ public class VideoPoker {
 				System.out.println("Sorry - du fick nada.");
 			}
 			return 0;
-		}
+		}		
 	}
 
 	public void compareScores() {
@@ -138,9 +117,22 @@ public class VideoPoker {
 			// Kicka spelare?
 		}
 	}
+
+	private String hasPairs(ArrayList<Card> hand, String score) {
+		// jämför korten mot varandra, två och två, och skriver sträng score som vi
+		// med i själva score
+		for (int i = 0; i < 4; i++) {
+			if (hand.get(i).getValue() == hand.get(i + 1).getValue()) {
+				score += "Par";
+			} else {
+				score += "Null";
+			}
+		}
+		return score;
+	}
 	
 	//Metoden kollar om olika kortkombinationer är stege. Tar även hänsyn till att ess kan vara 1 eller 14 i olika stegar. 
-	public String isStege(ArrayList<Card> hand, String score) {
+	public String isStraight(ArrayList<Card> hand, String score) {
 		int värde = 0;
 		for (int i = 1; i < 5; i++) {
 			värde += (hand.get(i).getValue());
@@ -156,7 +148,7 @@ public class VideoPoker {
 	}
 	
 	//metod för att kolla om handen är i färg
-	private String isFärg(ArrayList<Card> hand, String score){
+	private String isColor(ArrayList<Card> hand, String score){
 		Suit färg = hand.get(0).getSuit();
 		for(int i = 1; i <hand.size(); i++){
 			if (hand.get(i).getSuit() != färg){

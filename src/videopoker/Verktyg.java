@@ -67,7 +67,7 @@ public class Verktyg extends JPanel implements ActionListener{
 		setBackground(Color.BLUE);
 		spelare = new Player();
 		nyHand();
-		vp = new VideoPoker();
+		vp = new VideoPoker(1);
 
 
 		try{
@@ -180,7 +180,7 @@ public class Verktyg extends JPanel implements ActionListener{
 				}
 				dealButton.setEnabled(false);
 				restartButton.setEnabled(true);
-				poäng += vp.score(spelare.getHand());
+				poäng += vp.score(spelare.getHand() spelare.getScore());
 				poängtavla.setText("" + poäng);
 				for (JButton button : buttons) {
 					button.removeActionListener(this);
