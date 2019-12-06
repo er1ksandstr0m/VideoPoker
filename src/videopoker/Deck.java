@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Deck {
-	private List<Card> cards = new ArrayList<>();
+	private ArrayList<Card> cards = new ArrayList<>();
 
 	public Deck() {
 		for (int i = 0; i < Suit.values().length; i++) {
@@ -22,7 +22,7 @@ public class Deck {
 	}
 
 	public void shuffle() {
-		List<Card> shuffledCards = new ArrayList<>();
+		ArrayList<Card> shuffledCards = new ArrayList<>();
 		Random random = new Random();
 		Card card;
 
@@ -35,4 +35,3 @@ public class Deck {
 		cards = shuffledCards;
 	}
 }
-
