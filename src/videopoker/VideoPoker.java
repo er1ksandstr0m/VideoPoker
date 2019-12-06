@@ -89,7 +89,6 @@ public class VideoPoker {
 				System.out.println("Stege!");
 				return 4;
 			}
-
 		} else if (s.contains("Kungligt") && !s.contains("Par") && s.contains("Färg")) {
 
 			System.out.println("ROYAL FLUSH!");
@@ -116,15 +115,13 @@ public class VideoPoker {
 
 			if(dugerParet()) {
 				return 1;
-			};
+			}
 
 		} else {
 			if (s.contains("Färg")) {
 				System.out.println("Färg!!!");
 				return 6;
-
-			} 
-			
+			}
 		}
 		System.out.println("Sorry - du fick nada.");
 		return 0;
@@ -142,6 +139,7 @@ public class VideoPoker {
 		}
 	}
 
+
 	public boolean dugerParet() {
 		for (int i = 0; i < 4; i++) {
 			if (spelare.getHand().get(i).getValue() == spelare.getHand().get(i + 1).getValue()) {
@@ -154,6 +152,7 @@ public class VideoPoker {
 		}
 		System.out.println("Du har ett par, men det suger!");
 		return false;
+
 	}
 
 	public void betta(Player p, int summa) {
@@ -164,6 +163,7 @@ public class VideoPoker {
 
 	// Metoden kollar om olika kortkombinationer är stege. Tar även hänsyn till att
 	// ess kan vara 1 eller 14 i olika stegar.
+
 	public void isStege() {
 		int värde = 0;
 		for (int i = 1; i < 5; i++) {
@@ -183,7 +183,7 @@ public class VideoPoker {
 	}
 
 	public void rageQuit() {
-// Framtida sparning här 
+// Framtida sparning här
 		System.exit(0);
 	}
 }
