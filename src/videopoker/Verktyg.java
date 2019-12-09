@@ -5,8 +5,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+//import java.awt.Image.getScaledInstance;
+import java.io.*;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.Dimension;
@@ -16,6 +16,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import java.awt.geom.*;
+import java.net.*;
+import java.awt.Dimension;
 
 public class Verktyg extends JPanel implements ActionListener{
 
@@ -174,7 +178,13 @@ public class Verktyg extends JPanel implements ActionListener{
 					} catch (Exception ex) {
 						System.out.println("Filen hittades inte typ");
 					}
+
+
 					ImageIcon nyIcon = new ImageIcon(nyImage);
+
+
+
+
 					buttons[i].setIcon(nyIcon);
 					hand[i] = nyIcon;
 

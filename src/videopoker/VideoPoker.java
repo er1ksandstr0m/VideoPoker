@@ -20,9 +20,9 @@ public class VideoPoker {
 
 		kortlek.shuffle();
 
-		for (int i = 0; i < 5; i++) {
-			spelare.addCardToHand(kortlek.draw());
-		}
+		// 	for (int i = 0; i < 5; i++) {
+		// 		spelare.addCardToHand(kortlek.draw());
+		// }
 
 //		bytKort();
 
@@ -63,7 +63,7 @@ public class VideoPoker {
 	public int score(ArrayList<Card> hand) {
 		// SCORE
 
-		String s = "";
+		s = "";
 
 		// sorterar vår lista
 		Collections.sort(hand);
@@ -77,13 +77,14 @@ public class VideoPoker {
 				s += "Null";
 			}
 		}
-		System.out.println(s);
+
 		// kollar om man fått färg och lägger till det i sträng s
 		isFärg();
 
 		// kollar om det är en stege och lägger till det i strängen
 		isStege();
-
+		System.out.println(hand);
+		System.out.println(s);
 		// här ska vi lägga in bet och multiplicera med rätt faktor
 		if (s.contains("Stege") && !s.contains("Par")) {
 			if (s.contains("Färg")) {
@@ -134,13 +135,17 @@ public class VideoPoker {
 	// metod för att kolla om handen är i färg
 	public void isFärg() {
 		Suit färg = spelare.getHand().get(0).getSuit();
+		System.out.println(färg);
 		for (int i = 1; i < spelare.getHand().size(); i++) {
+			System.out.println(spelare.getHand().get(i).getSuit());
 			if (spelare.getHand().get(i).getSuit() != färg) {
 //				s += "Null";
-				break;
+				return;
 			}
-			s += "Färg";
+
 		}
+		System.out.println("Lägger till färg i strängen");
+		s += "Färg";
 	}
 
 

@@ -32,8 +32,8 @@ public class Ritare extends JFrame{
 		add(verktyg);
 
 		setBackground(Color.BLUE);
-		setSize(new Dimension(1000, 1000));
-		pack();
+		setSize(950, 900);
+	//	pack();
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
