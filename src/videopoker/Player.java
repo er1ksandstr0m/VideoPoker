@@ -68,6 +68,16 @@ public class Player {
 		}
 	}
 
+//Ökar bet med ett så länge bet är lägre än tre. Annars sätts bet till 1
+	public void placeBet(){
+		if(bet <3){
+			bet++;
+		}
+		else {
+			bet = 1;
+		}
+	}
+
 	/**
 	 * Gör försök att ta ut pengar. Returnerar om uttaget går bra eller ej.
 	 *

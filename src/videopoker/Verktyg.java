@@ -10,6 +10,7 @@ import java.io.*;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.Dimension;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -31,11 +32,14 @@ public class Verktyg extends JPanel implements ActionListener{
 	private BufferedImage image;
 	private BufferedImage dealButtonImage;
 	private ImageIcon dealButtonIcon;
-	private BufferedImage standButtonImage;
-	private ImageIcon standButtonIcon;
+	private BufferedImage betButtonImage;
+	private ImageIcon betButtonIcon;
 	private BufferedImage restartButtonImage;
 	private ImageIcon restartButtonIcon;
 	private BufferedImage nyImage;
+	private BufferedImage startButtonImage;
+	private ImageIcon startButtonIcon;
+
 
 	private BufferedImage regelImage;
 	private ImageIcon regelIcon;
@@ -53,13 +57,15 @@ public class Verktyg extends JPanel implements ActionListener{
 
 	private JPanel knappanel = new JPanel();
 	private JButton dealButton = new JButton();
-	private JButton standButton = new JButton();
+	private JButton betButton = new JButton();
 	private JButton restartButton = new JButton();
+	private JButton startButton = new JButton();
 
 	private JLabel poängtavleEtikett = new JLabel("credits:");
 	private JLabel poängtavla = new JLabel("0");
 
 	private JLabel bettingLabel = new JLabel("1");
+
 
 	private ImageIcon[] hand = new ImageIcon[5];
 
@@ -70,11 +76,19 @@ public class Verktyg extends JPanel implements ActionListener{
 
 	public Verktyg(){
 
+		try {
+			baksida = ImageIO.read(new File(Verktyg.class.getResource("Kort/Baksida.png").toURI()));
+		} catch (Exception ex) {
+			System.out.println("Filen hittades inte eller nåt");
+		}
+
+		baksidaIkon = new ImageIcon(baksida);
+
 		//setLayout(new GridLayout(3, 5, 0, 0));
 		setBackground(Color.BLUE);
 		spelare = new Player();
 		spelare.addMoney(100);
-		nyHand();
+		nyaBaksidor();
 		//nyHand();
 		vp = new VideoPoker(spelare);
 		bettingLabel.setText("" + spelare.getBet());
@@ -97,18 +111,23 @@ public class Verktyg extends JPanel implements ActionListener{
 
 		try {
 			dealButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Deal.png").toURI()));
-			standButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Bet.png").toURI()));
-			restartButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/NewHand.png").toURI()));
+			betButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Bet.png").toURI()));
+			restartButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Restart.png").toURI()));
+			startButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Start.png").toURI()));
 		} catch (Exception ex) {
 			System.out.println("Filen hittades inte eller det blev nåt uri-skit");
 		}
 
 		dealButtonIcon = new ImageIcon(dealButtonImage);
 		dealButton.setIcon(dealButtonIcon);
-		standButtonIcon = new ImageIcon(standButtonImage);
-		standButton.setIcon(standButtonIcon);
+		betButtonIcon = new ImageIcon(betButtonImage);
+		betButton.setIcon(betButtonIcon);
 		restartButtonIcon = new ImageIcon(restartButtonImage);
 		restartButton.setIcon(restartButtonIcon);
+		restartButtonIcon = new ImageIcon(restartButtonImage);
+		restartButton.setIcon(restartButtonIcon);
+		startButtonIcon = new ImageIcon(startButtonImage);
+		startButton.setIcon(startButtonIcon);
 
 		//setSize(800,100);
 		add(regelPanel);
@@ -122,14 +141,17 @@ public class Verktyg extends JPanel implements ActionListener{
 
 
 		knappanel.setBackground(Color.BLUE);
+		knappanel.add(startButton);
 		knappanel.add(dealButton);
-		knappanel.add(standButton);
+		knappanel.add(betButton);
 		knappanel.add(bettingLabel);
 		knappanel.add(restartButton);
 
+
 		dealButton.addActionListener(this);
-		standButton.addActionListener(this);
+		betButton.addActionListener(this);
 		restartButton.addActionListener(this);
+		startButton.addActionListener(this);
 		restartButton.setEnabled(false);
 
 		knappanel.add(poängtavleEtikett);
@@ -144,13 +166,7 @@ public class Verktyg extends JPanel implements ActionListener{
 
 
 
-		try {
-			baksida = ImageIO.read(new File(Verktyg.class.getResource("Kort/Baksida.png").toURI()));
-		} catch (Exception ex) {
-			System.out.println("Filen hittades inte eller nåt");
-		}
 
-		baksidaIkon = new ImageIcon(baksida);
 
 		for (JButton button : buttons) {
 			button.addActionListener(this);
@@ -174,6 +190,12 @@ public class Verktyg extends JPanel implements ActionListener{
 			}
 
 		}
+
+		if(e.getSource() == startButton){
+			System.out.println("Start");
+			nyHand();
+		}
+
 		// Kollar vad som händer när man trycker in deal-knappen
 		if (e.getSource() == dealButton) {
 			for (int i = 0; i < buttons.length; i++) {
@@ -203,12 +225,16 @@ public class Verktyg extends JPanel implements ActionListener{
 				spelare.addMoney(vp.score(spelare.getHand()));
 				poängtavla.setText("" + spelare.getWallet());
 				for (JButton button : buttons) {
-					button.removeActionListener(this);
+				button.removeActionListener(this);
 
 			}
 		}
 
-	//	if(e.getSource() == )
+		if(e.getSource() == betButton){
+			spelare.placeBet();
+			bettingLabel.setText("" + spelare.getBet());
+
+		}
 
 		if (e.getSource() == restartButton) {
 			nyHand();
@@ -254,9 +280,29 @@ public class Verktyg extends JPanel implements ActionListener{
 		}
 
 		for (int i = 0; i < buttons.length; i++) {
+			try{
+				Thread.sleep(100);
+			}catch(InterruptedException e) {
+				System.out.println(e);
+			}
 			buttons[i].setIcon(hand[i]);
 			kortPanel.add(buttons[i]);
+			kortPanel.repaint();
+
+
 		}
+	}
+
+
+	public void nyaBaksidor(){
+
+		for (int i = 0; i < buttons.length; i++) {
+			buttons[i].setIcon(baksidaIkon);
+			kortPanel.add(buttons[i]);
+
+		}
+
+
 	}
 
 }
