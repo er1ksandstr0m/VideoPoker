@@ -112,7 +112,7 @@ public class Verktyg extends JPanel implements ActionListener{
 		try {
 			dealButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Deal.png").toURI()));
 			betButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Bet.png").toURI()));
-			restartButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Restart.png").toURI()));
+			restartButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/NewHand.png").toURI()));
 			startButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Start.png").toURI()));
 		} catch (Exception ex) {
 			System.out.println("Filen hittades inte eller det blev nåt uri-skit");
@@ -194,6 +194,11 @@ public class Verktyg extends JPanel implements ActionListener{
 		if(e.getSource() == startButton){
 			System.out.println("Start");
 			nyHand();
+			dealButton.setEnabled(true);
+			restartButton.setEnabled(true);
+			startButton.setEnabled(false);
+
+
 		}
 
 		// Kollar vad som händer när man trycker in deal-knappen
@@ -222,6 +227,7 @@ public class Verktyg extends JPanel implements ActionListener{
 				}
 				dealButton.setEnabled(false);
 				restartButton.setEnabled(true);
+				betButton.setEnabled(true);
 				spelare.addMoney(vp.score(spelare.getHand()));
 				poängtavla.setText("" + spelare.getWallet());
 				for (JButton button : buttons) {
@@ -240,10 +246,12 @@ public class Verktyg extends JPanel implements ActionListener{
 			nyHand();
 			dealButton.setEnabled(true);
 			restartButton.setEnabled(false);
+			betButton.setEnabled(false);
 
 			for (JButton button : buttons) {
 				button.addActionListener(this);
 			}
+
 
 
 		}
@@ -252,10 +260,16 @@ public class Verktyg extends JPanel implements ActionListener{
 
 	// Skapar ny deck och ny hand
 	public void nyHand() {
+
+		spelare.withdrawMoney(spelare.getBet());
 		poängtavla.setText("" + spelare.getWallet());
+
+
 
 		kortlek = new Deck();
 		kortlek.shuffle();
+
+
 
 		// if (spelare.getHand().size() > 0) {
 		 	spelare.reset();
@@ -280,17 +294,18 @@ public class Verktyg extends JPanel implements ActionListener{
 		}
 
 		for (int i = 0; i < buttons.length; i++) {
-			try{
-				Thread.sleep(100);
-			}catch(InterruptedException e) {
-				System.out.println(e);
-			}
+			// try{
+			// 	Thread.sleep(100);
+			// }catch(InterruptedException e) {
+			// 	System.out.println(e);
+			// }
 			buttons[i].setIcon(hand[i]);
 			kortPanel.add(buttons[i]);
 			kortPanel.repaint();
-
-
 		}
+
+
+
 	}
 
 
@@ -299,8 +314,11 @@ public class Verktyg extends JPanel implements ActionListener{
 		for (int i = 0; i < buttons.length; i++) {
 			buttons[i].setIcon(baksidaIkon);
 			kortPanel.add(buttons[i]);
-
 		}
+
+		dealButton.setEnabled(false);
+		restartButton.setEnabled(false);
+		betButton.setEnabled(false);
 
 
 	}
