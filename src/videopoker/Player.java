@@ -60,7 +60,7 @@ public class Player {
 	public boolean placeBet(int pBet) {
 		if (pBet < wallet) {
 			wallet += -pBet;
-			bet += pBet;
+			bet = pBet;
 			return true;
 		} else {
 			System.out.println("För lite cash i plånkan yo!");
