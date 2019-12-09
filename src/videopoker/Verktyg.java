@@ -84,7 +84,7 @@ public class Verktyg extends JPanel implements ActionListener{
 		betButtonImage = findImage("Kort/Bet.png");
 		dealButtonImage = findImage("Kort/Deal.png");
 		restartButtonImage = findImage("Kort/Restart.png");
-		
+		startButtonImage = findImage("Kort/Start.png");
 		baksida = findImage("Kort/Baksida.png");
 		baksidaIkon = new ImageIcon(baksida);
 
