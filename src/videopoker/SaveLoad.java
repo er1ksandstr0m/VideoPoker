@@ -13,13 +13,11 @@ public class SaveLoad
 	//använder Gson som är googles egna Json grej
 	//kör en try catch för att skriva till object
 	//skapar en FileWriter som skriver till filen
-	public void Save(VideoPoker test)
+	public void Save(Player test)
 	{
 		Gson gson = new Gson();
 		String json = gson.toJson(test);
 
-
-		
 		try {
 			FileWriter writer = new FileWriter(path);
 			writer.write(json);
@@ -37,17 +35,16 @@ public class SaveLoad
 	//utgår ifrån att det inte finns något
 	//save game.
 
-	public VideoPoker Load()
+	public Player Load()
 	{
-
 		try {
 			Gson gson = new Gson();
-			return gson.fromJson(new FileReader(path), VideoPoker.class);
+			return gson.fromJson(new FileReader(path), Player.class);
 		}
 		catch (Exception e) {
 			System.out.println(e);
 		}
 
-		return new VideoPoker(new Player());
+		return new Player();
 	}
 }
