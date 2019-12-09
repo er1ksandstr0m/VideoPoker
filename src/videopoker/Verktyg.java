@@ -316,9 +316,11 @@ public class Verktyg extends JPanel implements ActionListener{
 			kortPanel.add(buttons[i]);
 		}
 
+		poängtavla.setText("" + spelare.getWallet());
+
 		dealButton.setEnabled(false);
 		restartButton.setEnabled(false);
-		betButton.setEnabled(false);
+
 
 
 	}
