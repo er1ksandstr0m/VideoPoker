@@ -56,12 +56,14 @@ public class Verktyg extends JPanel implements ActionListener{
 	private JButton standButton = new JButton();
 	private JButton restartButton = new JButton();
 
-	private JLabel poängtavleEtikett = new JLabel("score:");
+	private JLabel poängtavleEtikett = new JLabel("credits:");
 	private JLabel poängtavla = new JLabel("0");
+
+	private JLabel bettingLabel = new JLabel("1");
 
 	private ImageIcon[] hand = new ImageIcon[5];
 
-	private int poäng;
+	//private int poäng;
 	VideoPoker vp;
 
 
@@ -71,9 +73,11 @@ public class Verktyg extends JPanel implements ActionListener{
 		//setLayout(new GridLayout(3, 5, 0, 0));
 		setBackground(Color.BLUE);
 		spelare = new Player();
+		spelare.addMoney(100);
 		nyHand();
 		//nyHand();
 		vp = new VideoPoker(spelare);
+		bettingLabel.setText("" + spelare.getBet());
 
 
 
@@ -93,8 +97,8 @@ public class Verktyg extends JPanel implements ActionListener{
 
 		try {
 			dealButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Deal.png").toURI()));
-			standButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Stand.png").toURI()));
-			restartButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Restart.png").toURI()));
+			standButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Bet.png").toURI()));
+			restartButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/NewHand.png").toURI()));
 		} catch (Exception ex) {
 			System.out.println("Filen hittades inte eller det blev nåt uri-skit");
 		}
@@ -116,9 +120,11 @@ public class Verktyg extends JPanel implements ActionListener{
 		 // knappanel.setPreferredSize(new Dimension(700, 400));
 
 
+
 		knappanel.setBackground(Color.BLUE);
 		knappanel.add(dealButton);
 		knappanel.add(standButton);
+		knappanel.add(bettingLabel);
 		knappanel.add(restartButton);
 
 		dealButton.addActionListener(this);
@@ -130,6 +136,9 @@ public class Verktyg extends JPanel implements ActionListener{
 		knappanel.add(poängtavla);
 		poängtavleEtikett.setFont(new Font("SansSerif", 0, 40));
 		poängtavla.setFont(new Font("SansSerif", 0, 40));
+		bettingLabel.setFont(new Font("SansSerif", 0, 40));
+		bettingLabel.setForeground(Color.YELLOW);
+
 		poängtavla.setForeground(Color.YELLOW);
 		poängtavleEtikett.setForeground(Color.YELLOW);
 
@@ -182,9 +191,6 @@ public class Verktyg extends JPanel implements ActionListener{
 
 					ImageIcon nyIcon = new ImageIcon(nyImage);
 
-
-
-
 					buttons[i].setIcon(nyIcon);
 					hand[i] = nyIcon;
 
@@ -194,13 +200,15 @@ public class Verktyg extends JPanel implements ActionListener{
 				}
 				dealButton.setEnabled(false);
 				restartButton.setEnabled(true);
-				poäng += vp.score(spelare.getHand());
-				poängtavla.setText("" + poäng);
+				spelare.addMoney(vp.score(spelare.getHand()));
+				poängtavla.setText("" + spelare.getWallet());
 				for (JButton button : buttons) {
 					button.removeActionListener(this);
 
 			}
 		}
+
+	//	if(e.getSource() == )
 
 		if (e.getSource() == restartButton) {
 			nyHand();
@@ -218,6 +226,7 @@ public class Verktyg extends JPanel implements ActionListener{
 
 	// Skapar ny deck och ny hand
 	public void nyHand() {
+		poängtavla.setText("" + spelare.getWallet());
 
 		kortlek = new Deck();
 		kortlek.shuffle();
