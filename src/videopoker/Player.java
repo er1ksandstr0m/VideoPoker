@@ -1,13 +1,12 @@
 package videopoker;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Player {
 	private ArrayList<Card> hand;
 	private int wallet = 0;
-	private String score = "";
 	private int bet = 0;
+	private String score = "";
 
 	/**
 	 * Skapar spelare med tom hand och plånbok.
@@ -126,13 +125,12 @@ public class Player {
 	public ArrayList<Card> getHand() {
 		return hand;
 	}
-	
+
+	/**
+	 * @return Spelarens score
+	 */
 	public String getScore() {
 		return score;
-	}
-
-	public void setScore(String score) {
-		this.score = score;
 	}
 
 	/**
@@ -140,6 +138,114 @@ public class Player {
 	 */
 	public void reset() {
 		hand.clear();
+	}
+
+	/**
+	 * @return Poäng
+	 */
+	public int räknaPoäng() {
+		// här ska vi lägga in bet och multiplicera med rätt faktor
+		if (score.contains("Stege") && !score.contains("Par")) {
+			if (score.contains("Färg")) {
+				System.out.println("STRAIGHT FLUSH!");
+				return 50;
+			} else {
+				System.out.println("Stege!");
+				return 4;
+			}
+
+		} else if (score.contains("Kungligt") && !score.contains("Par") && score.contains("Färg")) {
+			System.out.println("ROYAL FLUSH!");
+			return 800;
+
+		} else if (score.contains("ParParPar")) {
+			System.out.println("Fyrtal!");
+			return 25;
+
+		} else if (score.contains("ParPar") && (score.startsWith("Par")
+				&& ((score.endsWith("Par") || (score.endsWith("ParStege") || (score.endsWith("ParKungligt"))))))) {
+			System.out.println("Kåk!");
+			return 9;
+
+		} else if (score.contains("ParPar")) {
+			System.out.println("Triss!");
+			return 3;
+
+		} else if ((score.matches("ParNullParNull")) || (score.matches("ParNullNullPar"))
+				|| (score.matches("NullParNullPar"))) {
+			System.out.println("Två Par!");
+			return 2;
+
+		} else if (score.contains("Par")) {
+			if (dugerParet()) {
+				return 1;
+			}
+
+		} else {
+			if (score.contains("Färg")) {
+				System.out.println("Färg!!!");
+				return 6;
+			}
+		}
+		System.out.println("Sorry - du fick nada.");
+		return 0;
+	}
+
+	public boolean dugerParet() {
+		for (int i = 0; i < 4; i++) {
+			if (hand.get(i).getValue() == hand.get(i + 1).getValue()) {
+				if ((hand.get(i).getValue() > 10) || (hand.get(i).getValue() == 1)) {
+					System.out.println("Du har ett par som duger!!");
+					return true;
+				}
+			}
+		}
+		System.out.println("Du har ett par, men det suger!");
+		return false;
+	}
+
+	/**
+	 *  Kollar om olika Kortkombinationer räknas som par.
+	 */
+	public void harPar() {
+		for (int i = 0; i < 4; i++) {
+			if (hand.get(i).getValue() == hand.get(i + 1).getValue()) {
+				score += "Par";
+			} else {
+				score += "Null";
+			}
+		}
+	}
+
+	/**
+	 *  Metoden kollar om olika kortkombinationer är stege.
+	 *  Tar även hänsyn till att ess kan vara 1 eller 14 i olika stegar.
+	 */
+	public void harStege() {
+		int värde = 0;
+		for (int i = 1; i < 5; i++) {
+			värde += (hand.get(i).getValue());
+		}
+		if ((hand).get(4).getValue() == (hand.get(0).getValue() + 4)) {
+
+			score += "Stege";
+		} else if ((hand.get(0).getValue() == 1) && (värde == 46)) {
+
+			score += "Kungligt";
+		}
+	}
+
+	/**
+	 *  metod för att kolla om handen är i färg.
+	 */
+	public void harFärg() {
+		Suit färg = hand.get(0).getSuit();
+		for (int i = 1; i < hand.size(); i++) {
+			if (hand.get(i).getSuit() != färg) {
+				break;
+			}
+			score += "Färg";
+		}
 	}
 
 }

@@ -14,17 +14,13 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class Ritare extends JFrame{
+	Verktyg verktyg;
+	// private JPanel panel = new JPanel();
 
-	Player spelare;
-	Deck kortlek;
-
-	Verktyg verktyg = new Verktyg();
-	private JPanel panel = new JPanel();
-
-	public Ritare() {
-
-
+	public Ritare(Verktyg verktyg) {
+		// verktyg = new Verktyg(antalSpelare);
 		// setLayout(new BorderLayout());
 		//
 		// add(panel, BorderLayout.CENTER);
@@ -37,14 +33,4 @@ public class Ritare extends JFrame{
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-
-
-
-
-public static void main (String [] args) {
-
-	Ritare ritare = new Ritare();
-}
-
-
 }
