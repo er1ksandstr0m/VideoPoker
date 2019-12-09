@@ -77,6 +77,7 @@ public class Verktyg extends JPanel implements ActionListener{
 	public Verktyg(){
 
 		try {
+			System.out.println(Verktyg.class.getResource("").toURI());
 			baksida = ImageIO.read(new File(Verktyg.class.getResource("Kort/Baksida.png").toURI()));
 		} catch (Exception ex) {
 			System.out.println("Filen hittades inte eller nåt");
