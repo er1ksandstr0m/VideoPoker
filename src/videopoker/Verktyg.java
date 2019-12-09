@@ -31,8 +31,8 @@ public class Verktyg extends JPanel implements ActionListener{
 	private BufferedImage image;
 	private BufferedImage dealButtonImage;
 	private ImageIcon dealButtonIcon;
-	private BufferedImage standButtonImage;
-	private ImageIcon standButtonIcon;
+	private BufferedImage betButtonImage;
+	private ImageIcon betButtonIcon;
 	private BufferedImage restartButtonImage;
 	private ImageIcon restartButtonIcon;
 	private BufferedImage nyImage;
@@ -53,7 +53,7 @@ public class Verktyg extends JPanel implements ActionListener{
 
 	private JPanel knappanel = new JPanel();
 	private JButton dealButton = new JButton();
-	private JButton standButton = new JButton();
+	private JButton betButton = new JButton();
 	private JButton restartButton = new JButton();
 
 	private JLabel poängtavleEtikett = new JLabel("score:");
@@ -93,7 +93,7 @@ public class Verktyg extends JPanel implements ActionListener{
 
 		try {
 			dealButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Deal.png").toURI()));
-			standButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Stand.png").toURI()));
+			betButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Stand.png").toURI()));
 			restartButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Restart.png").toURI()));
 		} catch (Exception ex) {
 			System.out.println("Filen hittades inte eller det blev nåt uri-skit");
@@ -101,8 +101,8 @@ public class Verktyg extends JPanel implements ActionListener{
 
 		dealButtonIcon = new ImageIcon(dealButtonImage);
 		dealButton.setIcon(dealButtonIcon);
-		standButtonIcon = new ImageIcon(standButtonImage);
-		standButton.setIcon(standButtonIcon);
+		betButtonIcon = new ImageIcon(betButtonImage);
+		betButton.setIcon(betButtonIcon);
 		restartButtonIcon = new ImageIcon(restartButtonImage);
 		restartButton.setIcon(restartButtonIcon);
 
@@ -118,11 +118,11 @@ public class Verktyg extends JPanel implements ActionListener{
 
 		knappanel.setBackground(Color.BLUE);
 		knappanel.add(dealButton);
-		knappanel.add(standButton);
+		knappanel.add(betButton);
 		knappanel.add(restartButton);
 
 		dealButton.addActionListener(this);
-		standButton.addActionListener(this);
+		betButton.addActionListener(this);
 		restartButton.addActionListener(this);
 		restartButton.setEnabled(false);
 
