@@ -12,6 +12,7 @@ public class Main {
 		VideoPoker vp = new VideoPoker(antalSpelare);
 		Verktyg verktyg = new Verktyg(vp);
 		Ritare ritare = new Ritare(verktyg);
+		scan.close();
 	}
 
 }

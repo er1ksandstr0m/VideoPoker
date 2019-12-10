@@ -2,7 +2,6 @@ package videopoker;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
 
 public class VideoPoker {
 	public ArrayList<Player> spelare;
@@ -21,7 +20,12 @@ public class VideoPoker {
 		}
 //		bytKort();
 	}
-
+	
+	/**
+	 * Skriver uut handen som en sträng
+	 * @param hand
+	 * @return String
+	 */
 	public String handTillSträng(ArrayList<Card> hand) {
 		String handTillSträng = "";
 		for (Card kort : hand) {
@@ -31,22 +35,14 @@ public class VideoPoker {
 
 	}
 	
+	/**
+	 * Hämtar en spelare
+	 * @param index
+	 * @return Player
+	 */
 	public Player getSpelare(int index) {
 		return spelare.get(index);
 	}
-
-//	public void bytKort(){
-//	  Scanner sc = new Scanner(System.in);
-//	  System.out.println("Du har korten " + handTillSträng(spelare.getHand()) +
-//	  " Vilka kort vill du byta (skriv kortets nummer)");
-//	  while(sc.hasNextInt()){
-//	    spelare.changeCard(spelare.getHand().get(sc.nextInt()-1), kortlek.draw());
-//	  }
-//		System.out.println("Du fick korten " + handTillSträng(spelare.getHand()) +
-//		" och fick " + /*score() +*/ " poäng");
-//		score();
-//	  sc.close();
-//	  }
 	
 	/**
 	 * Kollar handen och returnerar en poäng
@@ -99,4 +95,17 @@ public class VideoPoker {
 	public void setKortlek(Deck kortlek) {
 		this.kortlek = kortlek;
 	}
+	
+//	public void bytKort(){
+//	  Scanner sc = new Scanner(System.in);
+//	  System.out.println("Du har korten " + handTillSträng(spelare.getHand()) +
+//	  " Vilka kort vill du byta (skriv kortets nummer)");
+//	  while(sc.hasNextInt()){
+//	    spelare.changeCard(spelare.getHand().get(sc.nextInt()-1), kortlek.draw());
+//	  }
+//		System.out.println("Du fick korten " + handTillSträng(spelare.getHand()) +
+//		" och fick " + /*score() +*/ " poäng");
+//		score();
+//	  sc.close();
+//	  }
 }
