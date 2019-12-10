@@ -22,7 +22,7 @@ public class VideoPoker {
 	}
 	
 	/**
-	 * Skriver uut handen som en sträng
+	 * Skriver ut handen som en sträng
 	 * @param hand
 	 * @return String
 	 */
