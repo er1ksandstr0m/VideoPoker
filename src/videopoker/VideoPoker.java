@@ -5,59 +5,43 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class VideoPoker {
-	Player spelare;
-	Deck kortlek;
+	ArrayList<Player> spelare = new ArrayList<Player>();
+	Deck kortlek = new Deck();
 	String s;
 
 	public Player getSpelare() {
-		return spelare;
+		return spelare.get(0);
 	}
 
 	public VideoPoker(Player spelare) {
 
-		this.spelare = spelare;
-		kortlek = new Deck();
+		this.spelare.add(spelare);
 
 		kortlek.shuffle();
-
-		// 	for (int i = 0; i < 5; i++) {
-		// 		spelare.addCardToHand(kortlek.draw());
-		// }
-
-//		bytKort();
-
 	}
-
-	public String handTillSträng(ArrayList<Card> hand) {
-		String handTillSträng = "";
-		for (Card kort : spelare.getHand()) {
-			handTillSträng += kort.toString() + ", ";
+	public VideoPoker() {
+		spelare.add(new Player());
+		spelare.get(0).addMoney(100);
+		kortlek.shuffle();
+	}
+	public VideoPoker(int nrOfPlayers) {
+		for(int i =0;i<nrOfPlayers;i++) {
+			spelare.add(new Player());
+			spelare.get(i).addMoney(100);
 		}
-		return handTillSträng;
-
+		kortlek.shuffle();
 	}
+	
 
-//	public void bytKort(){
+//	public String handTillSträng(ArrayList<Card> hand) {
+//		String handTillSträng = "";
+//		for (Card kort : spelare.get(0).getHand()) {
+//			handTillSträng += kort.toString() + ", ";
+//		}
+//		return handTillSträng;
 //
-//
-//	  Scanner sc = new Scanner(System.in);
-//
-//	  System.out.println("Du har korten " + handTillSträng(spelare.getHand()) +
-//	  " Vilka kort vill du byta (skriv kortets nummer)");
-//
-//
-//	  while(sc.hasNextInt()){
-//	    spelare.changeCard(spelare.getHand().get(sc.nextInt()-1), kortlek.draw());
-//	  }
-//
+//	}
 
-//		System.out.println("Du fick korten " + handTillSträng(spelare.getHand()) +
-//		" och fick " + /*score() +*/ " poäng");
-//		score();
-//
-//
-//	  sc.close();
-//	  }
 
 	@SuppressWarnings("unchecked")
 	public int score(ArrayList<Card> hand) {
@@ -134,11 +118,11 @@ public class VideoPoker {
 
 	// metod för att kolla om handen är i färg
 	public void isFärg() {
-		Suit färg = spelare.getHand().get(0).getSuit();
+		Suit färg = spelare.get(0).getHand().get(0).getSuit();
 		System.out.println(färg);
-		for (int i = 1; i < spelare.getHand().size(); i++) {
-			System.out.println(spelare.getHand().get(i).getSuit());
-			if (spelare.getHand().get(i).getSuit() != färg) {
+		for (int i = 1; i < spelare.get(0).getHand().size(); i++) {
+			System.out.println(spelare.get(0).getHand().get(i).getSuit());
+			if (spelare.get(0).getHand().get(i).getSuit() != färg) {
 //				s += "Null";
 				return;
 			}
@@ -151,8 +135,8 @@ public class VideoPoker {
 
 	public boolean dugerParet() {
 		for (int i = 0; i < 4; i++) {
-			if (spelare.getHand().get(i).getValue() == spelare.getHand().get(i + 1).getValue()) {
-				if ((spelare.getHand().get(i).getValue() > 10) || (spelare.getHand().get(i).getValue() == 1)) {
+			if (spelare.get(0).getHand().get(i).getValue() == spelare.get(0).getHand().get(i + 1).getValue()) {
+				if ((spelare.get(0).getHand().get(i).getValue() > 10) || (spelare.get(0).getHand().get(i).getValue() == 1)) {
 					System.out.println("Du har ett par som duger!!");
 					return true;
 				}
@@ -164,8 +148,8 @@ public class VideoPoker {
 
 	}
 
-	public void betta(Player p, int summa) {
-		if (!p.placeBet(summa)) {
+	public void betta(int i , int summa) {
+		if (!spelare.get(i).placeBet(summa)) {
 			// Kicka spelare?
 		}
 	}
@@ -176,12 +160,12 @@ public class VideoPoker {
 	public void isStege() {
 		int värde = 0;
 		for (int i = 1; i < 5; i++) {
-			värde += (spelare.getHand().get(i).getValue());
+			värde += (spelare.get(0).getHand().get(i).getValue());
 		}
-		if ((spelare.getHand().get(4).getValue()) == (spelare.getHand().get(0).getValue() + 4)) {
+		if ((spelare.get(0).getHand().get(4).getValue()) == (spelare.get(0).getHand().get(0).getValue() + 4)) {
 
 			s += "Stege";
-		} else if ((spelare.getHand().get(0).getValue() == 1) && (värde == 46)) {
+		} else if ((spelare.get(0).getHand().get(0).getValue() == 1) && (värde == 46)) {
 
 			s += "Kungligt";
 		}

@@ -1,59 +1,34 @@
 package videopoker;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-//import java.awt.Image.getScaledInstance;
-import java.io.*;
-import java.awt.*;
-import javax.swing.*;
-import java.awt.Dimension;
-import java.util.concurrent.TimeUnit;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
-import java.awt.geom.*;
-import java.net.*;
-import java.awt.Dimension;
 
 public class Verktyg extends JPanel implements ActionListener {
 
 	private Player spelare;
 	private Deck kortlek;
 
-	private BufferedImage baksida;
 	private ImageIcon baksidaIkon;
-	private BufferedImage image;
-	private BufferedImage dealButtonImage;
-	private ImageIcon dealButtonIcon;
-	private BufferedImage betButtonImage;
-	private ImageIcon betButtonIcon;
-	private BufferedImage restartButtonImage;
-	private ImageIcon restartButtonIcon;
-	private BufferedImage nyImage;
-	private BufferedImage startButtonImage;
-	private ImageIcon startButtonIcon;
-
-	private BufferedImage regelImage;
-	private ImageIcon regelIcon;
+	private BufferedImage bImage;
 	private JPanel regelPanel = new JPanel();
-	private JLabel regelLabel;
-
-	private JButton b1 = new JButton();
-	private JButton b2 = new JButton();
-	private JButton b3 = new JButton();
-	private JButton b4 = new JButton();
-	private JButton b5 = new JButton();
 
 	private JPanel kortPanel = new JPanel();
-	private JButton[] buttons = { b1, b2, b3, b4, b5 };
+	private JButton[] buttons = new JButton[5];
 
 	private JPanel knappanel = new JPanel();
 	private JButton dealButton = new JButton();
@@ -69,29 +44,24 @@ public class Verktyg extends JPanel implements ActionListener {
 
 	private ImageIcon[] hand = new ImageIcon[5];
 
-	// private int poäng;
-	VideoPoker vp;
+	String kortkatalog = "Kort3"; //Katalog för bilderna. Obs, se till att typ start-bilden och sånt finns i mappen
 
-//cheat
-//	spelare.reset();
-//	spelare.addCardToHand(new Card(11,Suit.CLUBS));
-//	spelare.addCardToHand(new Card(11,Suit.CLUBS));
-//	spelare.addCardToHand(new Card(11,Suit.CLUBS));
-//	spelare.addCardToHand(new Card(5,Suit.CLUBS));
-//	spelare.addCardToHand(new Card(11,Suit.CLUBS));
+	Dimension d = new Dimension(200, 300);// Kortens/kortknapparnas storlek
+	VideoPoker vp;
+	private boolean win = false; //Cheat för royal straight flush
+	Color background = Color.BLACK; //Bakgrundsfärgen
 
 	public Verktyg() {
-
-		try {
-			baksida = ImageIO.read(new File(Verktyg.class.getResource("Kort/Baksida.png").toURI()));
-		} catch (Exception ex) {
-			System.out.println("Filen hittades inte eller nåt");
+		for (int i = 0; i < 5; i++) {
+			buttons[i] = new JButton();
 		}
 
-		baksidaIkon = new ImageIcon(baksida);
-
+		getImage(kortkatalog + "/Baksida.png");
+		Image image = new ImageIcon(bImage).getImage(); // transform it
+		image = image.getScaledInstance(d.width, d.height, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+		baksidaIkon = new ImageIcon(image);
 		// setLayout(new GridLayout(3, 5, 0, 0));
-		setBackground(Color.BLUE);
+		setBackground(background);
 		spelare = new Player();
 		spelare.addMoney(100);
 		nyaBaksidor();
@@ -99,47 +69,25 @@ public class Verktyg extends JPanel implements ActionListener {
 		vp = new VideoPoker(spelare);
 		bettingLabel.setText("" + betsiffra);
 
-		try {
-			regelImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/FiveCardPoker2.png").toURI()));
-		} catch (Exception ex) {
-			System.out.println("Filen hittades inte eller toURIExeption");
-		}
+		getImage(kortkatalog + "/FiveCardPoker1_2.png");
+		regelPanel.add(new JLabel(new ImageIcon(bImage)));
 
-		regelLabel = new JLabel(new ImageIcon(regelImage));
-		regelPanel.add(regelLabel);
+		kortPanel.setBackground(background);
 
-		kortPanel.setBackground(Color.BLUE);
+		getImage(kortkatalog + "/Deal.png");
+		dealButton.setIcon(new ImageIcon(bImage));
+		getImage(kortkatalog + "/Bet.png");
+		betButton.setIcon(new ImageIcon(bImage));
+		getImage(kortkatalog + "/Start.png");
+		startButton.setIcon(new ImageIcon(bImage));
+		getImage(kortkatalog + "/NewHand.png");
+		restartButton.setIcon(new ImageIcon(bImage));
 
-		try {
-			dealButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Deal.png").toURI()));
-			betButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Bet.png").toURI()));
-			restartButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/NewHand.png").toURI()));
-			startButtonImage = ImageIO.read(new File(Verktyg.class.getResource("Kort/Start.png").toURI()));
-		} catch (Exception ex) {
-			System.out.println("Filen hittades inte eller det blev nåt uri-skit");
-		}
-
-		dealButtonIcon = new ImageIcon(dealButtonImage);
-		dealButton.setIcon(dealButtonIcon);
-		betButtonIcon = new ImageIcon(betButtonImage);
-		betButton.setIcon(betButtonIcon);
-		restartButtonIcon = new ImageIcon(restartButtonImage);
-		restartButton.setIcon(restartButtonIcon);
-		restartButtonIcon = new ImageIcon(restartButtonImage);
-		restartButton.setIcon(restartButtonIcon);
-		startButtonIcon = new ImageIcon(startButtonImage);
-		startButton.setIcon(startButtonIcon);
-
-		// setSize(800,100);
 		add(regelPanel);
 		add(kortPanel);
 		add(knappanel);
 
-		// kortPanel.setPreferredSize(new Dimension(700, 400));
-		// regelPanel.setPreferredSize(new Dimension(700, 400));
-		// knappanel.setPreferredSize(new Dimension(700, 400));
-
-		knappanel.setBackground(Color.BLUE);
+		knappanel.setBackground(background);
 		knappanel.add(startButton);
 		knappanel.add(dealButton);
 		knappanel.add(betButton);
@@ -161,10 +109,6 @@ public class Verktyg extends JPanel implements ActionListener {
 
 		poängtavla.setForeground(Color.YELLOW);
 		poängtavleEtikett.setForeground(Color.YELLOW);
-
-		for (JButton button : buttons) {
-			button.addActionListener(this);
-		}
 
 	}
 
@@ -188,6 +132,9 @@ public class Verktyg extends JPanel implements ActionListener {
 			System.out.println("Start");
 			spelare.placeBet(Integer.parseInt(bettingLabel.getText()));
 			nyHand();
+			for (JButton button : buttons) {
+				button.addActionListener(this);
+			}
 			dealButton.setEnabled(true);
 			restartButton.setEnabled(false);
 			startButton.setEnabled(false);
@@ -201,18 +148,14 @@ public class Verktyg extends JPanel implements ActionListener {
 				if (buttons[i].getIcon() == baksidaIkon) {
 					Card nyttKort = kortlek.draw();
 					spelare.changeCard(spelare.getHand().get(i), nyttKort);
+					getImage(kortkatalog + "/" + nyttKort.getSymbol() + nyttKort.getValue() + ".png");
 
-					try {
-						nyImage = ImageIO.read(new File(Verktyg.class
-								.getResource("Kort/" + nyttKort.getSymbol() + nyttKort.getValue() + ".png").toURI()));
-					} catch (Exception ex) {
-						System.out.println("Filen hittades inte typ");
-					}
+					Image image = new ImageIcon(bImage).getImage(); // transform it
+					image = image.getScaledInstance(d.width, d.height, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
 
-					ImageIcon nyIcon = new ImageIcon(nyImage);
+					hand[i] = new ImageIcon(image);
 
-					buttons[i].setIcon(nyIcon);
-					hand[i] = nyIcon;
+					buttons[i].setIcon(hand[i]);
 
 				}
 
@@ -274,27 +217,33 @@ public class Verktyg extends JPanel implements ActionListener {
 			spelare.addCardToHand(kortlek.draw());
 
 		}
+		if (win == true) {
+			spelare.reset();
+			spelare.addCardToHand(new Card(10, Suit.CLUBS));
+			spelare.addCardToHand(new Card(11, Suit.CLUBS));
+			spelare.addCardToHand(new Card(12, Suit.CLUBS));
+			spelare.addCardToHand(new Card(13, Suit.CLUBS));
+			spelare.addCardToHand(new Card(1, Suit.CLUBS));
+		}
 
 		// hämtar bilderna för spelarens hand
 		for (int i = 0; i < spelare.getHand().size(); i++) {
-			try {
-				image = ImageIO.read(new File(Verktyg.class.getResource(
-						"Kort/" + spelare.getHand().get(i).getSymbol() + spelare.getHand().get(i).getValue() + ".png")
-						.toURI()));
+			getImage(kortkatalog + "/" + spelare.getHand().get(i).getSymbol() + spelare.getHand().get(i).getValue()
+					+ ".png");
 
-			} catch (Exception ex) {
-				System.out.println("Filen hittades inte/URI");
-			}
+			Image image = new ImageIcon(bImage).getImage(); // transform it
+			image = image.getScaledInstance(200, 300, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
 
 			hand[i] = new ImageIcon(image);
 		}
 
 		for (int i = 0; i < buttons.length; i++) {
-			// try{
-			// Thread.sleep(100);
-			// }catch(InterruptedException e) {
-			// System.out.println(e);
-			// }
+//			 try{
+//			 Thread.sleep(100);
+//			 }catch(InterruptedException e) {
+//			 System.out.println(e);
+//			 }
+
 			buttons[i].setIcon(hand[i]);
 			kortPanel.add(buttons[i]);
 			kortPanel.repaint();
@@ -306,6 +255,7 @@ public class Verktyg extends JPanel implements ActionListener {
 
 		for (int i = 0; i < buttons.length; i++) {
 			buttons[i].setIcon(baksidaIkon);
+			buttons[i].setPreferredSize(d);
 			kortPanel.add(buttons[i]);
 		}
 
@@ -316,4 +266,12 @@ public class Verktyg extends JPanel implements ActionListener {
 
 	}
 
+	private void getImage(String source) {
+		try {
+			bImage = ImageIO.read(new File(Verktyg.class.getResource(source).toURI()));
+		} catch (IOException | URISyntaxException e) {
+			System.out.println("Crap!");
+			e.printStackTrace();
+		}
+	}
 }

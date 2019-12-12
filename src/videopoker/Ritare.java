@@ -1,18 +1,8 @@
 package videopoker;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 public class Ritare extends JFrame{
 
@@ -20,7 +10,6 @@ public class Ritare extends JFrame{
 	Deck kortlek;
 
 	Verktyg verktyg = new Verktyg();
-	private JPanel panel = new JPanel();
 
 	public Ritare() {
 
@@ -32,7 +21,7 @@ public class Ritare extends JFrame{
 		add(verktyg);
 
 		setBackground(Color.BLUE);
-		setSize(1000, 900);
+		setSize(1100, 900);
 	//	pack();
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
