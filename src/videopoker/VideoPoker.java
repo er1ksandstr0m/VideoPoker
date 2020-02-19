@@ -53,12 +53,12 @@ public class VideoPoker {
 		// sorterar vår lista
 		Collections.sort(p.getHand());
 		// kollar om man fått par och lägger till det i score
-		p.harPar();
+		p.hasPair();
 		// kollar om man fått färg och lägger till det i score
-		p.harFärg();
+		p.hasColour();
 		// kollar om man fått stege och lägger till det i score
-		p.harStege();
-		return p.räknaPoäng();
+		p.hasStraight();
+		return p.countScore();
 	}
 	
 	/**
@@ -94,6 +94,19 @@ public class VideoPoker {
 	 */
 	public void setKortlek(Deck kortlek) {
 		this.kortlek = kortlek;
+	}
+	
+	/**
+	 * 
+	 * @param playerNr
+	 */
+
+	public void withdrawMoney(int playerNr) {
+		spelare.get(playerNr).withdrawMoney();
+	}
+
+	public void placeBet(int pbet, int playerNr) {
+		getSpelare(playerNr).placeBet();
 	}
 	
 //	public void bytKort(){

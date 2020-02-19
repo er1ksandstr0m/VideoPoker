@@ -51,6 +51,14 @@ public class Player {
 		return false;
 	}
 
+	public boolean withdrawMoney() {
+		if (wallet > bet) {
+			wallet += -bet;
+			return true;
+		}
+		return false;
+	}
+	
 	/**
 	 * Gör försök att ta ut pengar. Returnerar om uttaget går bra eller ej.
 	 *
@@ -68,7 +76,7 @@ public class Player {
 		}
 	}
 
-//Ökar bet med ett så länge bet är lägre än tre. Annars sätts bet till 1
+	//Ökar bet med ett så länge bet är lägre än tre. Annars sätts bet till 1
 	public void placeBet(){
 		if(bet <3){
 			bet++;
@@ -153,7 +161,7 @@ public class Player {
 	/**
 	 * @return Poäng
 	 */
-	public int räknaPoäng() {
+	public int countScore() {
 		// här ska vi lägga in bet och multiplicera med rätt faktor
 		if (score.contains("Stege") && !score.contains("Par")) {
 			if (score.contains("Färg")) {
@@ -187,7 +195,7 @@ public class Player {
 			return 2;
 
 		} else if (score.contains("Par")) {
-			if (dugerParet()) {
+			if (isPairValid()) {
 				return 1;
 			}
 
@@ -201,7 +209,7 @@ public class Player {
 		return 0;
 	}
 
-	public boolean dugerParet() {
+	public boolean isPairValid() {
 		for (int i = 0; i < 4; i++) {
 			if (hand.get(i).getValue() == hand.get(i + 1).getValue()) {
 				if ((hand.get(i).getValue() > 10) || (hand.get(i).getValue() == 1)) {
@@ -217,7 +225,7 @@ public class Player {
 	/**
 	 *  Kollar om olika Kortkombinationer räknas som par.
 	 */
-	public void harPar() {
+	public void hasPair() {
 		for (int i = 0; i < 4; i++) {
 			if (hand.get(i).getValue() == hand.get(i + 1).getValue()) {
 				score += "Par";
@@ -231,7 +239,7 @@ public class Player {
 	 *  Metoden kollar om olika kortkombinationer är stege.
 	 *  Tar även hänsyn till att ess kan vara 1 eller 14 i olika stegar.
 	 */
-	public void harStege() {
+	public void hasStraight() {
 		int värde = 0;
 		for (int i = 1; i < 5; i++) {
 			värde += (hand.get(i).getValue());
@@ -248,7 +256,7 @@ public class Player {
 	/**
 	 *  metod för att kolla om handen är i färg.
 	 */
-	public void harFärg() {
+	public void hasColour() {
 		Suit färg = hand.get(0).getSuit();
 		for (int i = 1; i < hand.size(); i++) {
 			if (hand.get(i).getSuit() != färg) {

@@ -147,14 +147,12 @@ public class Verktyg extends JPanel implements ActionListener{
 		checkStartButton(e);
 	}
 
-	// Skapar ny deck och ny hand
-
 	/**
-	 * Skapar ny deck och ny hand
+	 * Skapar ny deck och hand
 	 */
-	public void nyHand() {
+	public void nyHand(int playerNr) {
 		poängtavla.setText("" + vp.getSpelare(0).getWallet());
-		vp.getSpelare(0).withdrawMoney(vp.getSpelare(0).getBet());
+		vp.withdrawMoney(playerNr); 
 		poängtavla.setText("" + vp.getSpelare(0).getWallet());
 		vp.setKortlek(new Deck());
 		vp.getKortlek().shuffle();
@@ -282,10 +280,10 @@ public class Verktyg extends JPanel implements ActionListener{
 	 * Kollar vad som händer när man trycker på restart-knappen
 	 * @param e
 	 */
-	public void checkRestartButton(ActionEvent e) {
+	public void checkRestartButton(ActionEvent e, int playerNr) {
 		if (e.getSource() == restartButton) {
-			vp.spelare.get(0).placeBet(Integer.parseInt(bettingLabel.getText()));
-			nyHand();
+			vp.placeBet(getBettingLabel(), playerNr);
+			nyHand(playerNr);
 			dealButton.setEnabled(true);
 			restartButton.setEnabled(false);
 			betButton.setEnabled(false);
@@ -308,5 +306,9 @@ public class Verktyg extends JPanel implements ActionListener{
 		poängtavla.setText("" + vp.getSpelare(0).getWallet());
 		dealButton.setEnabled(false);
 		restartButton.setEnabled(false);
+	}
+	
+	public int getBettingLabel() {
+		return Integer.parseInt(bettingLabel.getText());
 	}
 }
